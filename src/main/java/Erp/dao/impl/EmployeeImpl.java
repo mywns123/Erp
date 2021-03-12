@@ -134,7 +134,8 @@ public class EmployeeImpl implements EmployeeDao {
 		String sql = "delete" + 
 					 " from employee " + 
 					 " where empno = ?;";
-		try (Connection con = jdbcConn.getConnection(); PreparedStatement std = con.prepareStatement(sql)) {
+		try (Connection con = jdbcConn.getConnection();
+				PreparedStatement std = con.prepareStatement(sql)) {
 			std.setInt(1, empNo);
 			return std.executeUpdate();
 		} catch (SQLException e) {
@@ -143,4 +144,32 @@ public class EmployeeImpl implements EmployeeDao {
 		return 0;
 	}
 
+	@Override
+	public List<Employee> selectEmployeeByTitle(Employee employee) {
+		String sql = "select empNo,empName from employee e join title t on e.title  = t.tno where tno =?";
+		try (Connection con = jdbcConn.getConnection();
+				PreparedStatement std = con.prepareStatement(sql);) {
+			std.setInt(1, employee.getTitle().gettNo());			
+			try (ResultSet rs = std.executeQuery()) {
+				if (rs.next()) {
+					List<Employee> list = new ArrayList<>();
+					do {
+						list.add(getEmp(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
 }
+	private Employee getEmp(ResultSet rs) throws SQLException {
+		int empNo = rs.getInt("empno");
+		String empName = rs.getString("empname");
+		return new Employee(empNo, empName);
+	}
+
+}
+	

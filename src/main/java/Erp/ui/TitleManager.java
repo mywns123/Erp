@@ -3,6 +3,7 @@ package Erp.ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLClientInfoException;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -13,6 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.TitledBorder;
 
+import Erp.dao.EmployeeDao;
+import Erp.dao.impl.EmployeeImpl;
+import Erp.dto.Employee;
 import Erp.dto.Title;
 import Erp.service.TitleService;
 import Erp.ui.content.TitlePanel;
@@ -52,8 +56,8 @@ public class TitleManager extends JFrame implements ActionListener {
 		btnAdd.addActionListener(this);
 		pBtn.add(btnAdd);
 		
-		JButton btnCleat = new JButton("취소");
-		pBtn.add(btnCleat);
+		JButton btnClear = new JButton("취소");
+		pBtn.add(btnClear);
 		
 		pList = new TitleTablePanel();
 		pList.setService(service);
@@ -68,11 +72,18 @@ public class TitleManager extends JFrame implements ActionListener {
 		JPopupMenu popMenu = new JPopupMenu();
 		
 		JMenuItem updateItem = new JMenuItem("수정");
+		updateItem.addActionListener(popMenuListener);
 		popMenu.add(updateItem);
+		
 		
 		JMenuItem deleteItem = new JMenuItem("삭제");
 		deleteItem.addActionListener(popMenuListener);
 		popMenu.add(deleteItem);			
+		
+		
+		JMenuItem empListByTitleItem = new JMenuItem("동일직책사원 보기");
+		empListByTitleItem.addActionListener(popMenuListener);
+		popMenu.add(empListByTitleItem);
 		
 		return popMenu;
 	}
@@ -88,12 +99,31 @@ public class TitleManager extends JFrame implements ActionListener {
 					service.removeTitle(delTitle);
 					pList.loadData();
 					JOptionPane.showMessageDialog(null,delTitle +  "삭제되었습니다.");
+				}else if(e.getActionCommand().equals("동일직책사원 보기")) {		
+					int i = pList.getItem().gettNo();
+					Employee  selEmp   = new Employee(i);
+//					List<Employee> emplist = service.showEmployeeByTitle(new Title(i));	
+					for(Employee e1 : emplist) {
+						System.out.println(e1);
+						JOptionPane.showMessageDialog(null, e1);
+					}
+					
 				}
+				
+				
+				
 			}catch(NotSelectedException | SqlConstraintExption e2) {
 				JOptionPane.showMessageDialog(null,e2.getMessage());			
 			}catch(Exception e2) {
 				e2.printStackTrace();
 			}
+			
+			if(e.getActionCommand().equals("수정")) {
+				btnAdd.setText("수정");
+			}
+			
+			
+			
 			
 		}
 	};
@@ -114,13 +144,25 @@ public class TitleManager extends JFrame implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtnAdd(ActionEvent e) {
-		Title title = pContent.getTitle();
+		switch(btnAdd.getText()) {
+		case "추가" :
+			Title title = pContent.getTitle();		
+			service.addTitle(title);
+			pContent.clearTf();		
+			JOptionPane.showMessageDialog(null, title + "추가했습니다.");			
+			pList.loadData();			
+		case "수정" :
+			//pContent에서 수정된 list가져오기
+			//update수행
+			//pList갱신
+			//pContent clearTf()호출				
+			Title title1 = pContent.getTitle();
+			service.updateTitle(title1);
+			pContent.clearTf();
+			pList.loadData();
+			btnAdd.setText("추가");
+			JOptionPane.showMessageDialog(null, title1 + "수정했습니다.");	
+		}
 		
-		
-		service.addTitle(title);
-		pContent.clearTf();		
-		JOptionPane.showMessageDialog(null, title + "추가했습니다.");
-		
-		pList.loadData();
 	}
 }
