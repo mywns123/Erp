@@ -29,8 +29,8 @@ dependencies {
 
 jar {
 	version = 1.0
-	mainClassName= 'Erp.SwingMain.erp'
-	baseName= 'UserUI'
+	mainClassName= 'erp.Main'
+	baseName= 'Main'
 	appendix = 'bin'
 	
 	manifest{
