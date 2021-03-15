@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Erp.ui.DepartmentManager;
 import Erp.ui.TitleManager;
 
 @SuppressWarnings("serial")
@@ -17,6 +18,8 @@ public class Main extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JButton btnTitle;
+	private JButton btnDepartment;
+	private JButton btnEmployee;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -47,14 +50,22 @@ public class Main extends JFrame implements ActionListener {
 		btnTitle.addActionListener(this);
 		contentPane.add(btnTitle);
 		
-		JButton btnDepartment = new JButton("부서관리");
+		btnDepartment = new JButton("부서관리");
+		btnDepartment.addActionListener(this);
 		contentPane.add(btnDepartment);
 		
-		JButton btnEmployee = new JButton("사원관리");
+		btnEmployee = new JButton("사원관리");
+		btnEmployee.addActionListener(this);
 		contentPane.add(btnEmployee);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEmployee) {
+			actionPerformedBtnEmployee(e);
+		}
+		if (e.getSource() == btnDepartment) {
+			actionPerformedBtnDepartment(e);
+		}
 		if (e.getSource() == btnTitle) {
 			actionPerformedBtnTitle(e);
 		}
@@ -62,5 +73,12 @@ public class Main extends JFrame implements ActionListener {
 	protected void actionPerformedBtnTitle(ActionEvent e) {
 		TitleManager frame = new TitleManager();
 		frame.setVisible(true);
+	}
+	protected void actionPerformedBtnDepartment(ActionEvent e) {
+		DepartmentManager frame = new DepartmentManager();
+		frame.setVisible(true);
+	}
+	protected void actionPerformedBtnEmployee(ActionEvent e) {
+		
 	}
 }

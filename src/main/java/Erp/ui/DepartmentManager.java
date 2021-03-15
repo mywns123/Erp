@@ -16,38 +16,32 @@ import javax.swing.border.EmptyBorder;
 
 import Erp.dto.Department;
 import Erp.dto.Employee;
-import Erp.dto.Title;
 import Erp.service.DepartmentService;
-import Erp.service.TitleService;
 import Erp.ui.content.DepartmentPanel;
 import Erp.ui.content.InterfaceItem;
-import Erp.ui.content.TitlePanel;
 import Erp.ui.exception.InvalidCheckException;
 import Erp.ui.exception.NotSelectedException;
 import Erp.ui.exception.SqlConstraintException;
 import Erp.ui.list.AbstractCustomTablePanel;
 import Erp.ui.list.DepartmentTablePanel;
-import Erp.ui.list.TitleTablePanel;
 
 @SuppressWarnings("serial")
-public class TitleManager extends JFrame implements ActionListener  {
-	
+public class DepartmentManager extends JFrame implements ActionListener {
+
 	private JPanel contentPane;
 	private JButton btnAdd;
-	
-	private InterfaceItem<Title> panel;
+	private DepartmentService service;
+	private InterfaceItem<Department> panel;
 	private JButton btnCancel;
-	private AbstractCustomTablePanel<Title> pList;
+	private AbstractCustomTablePanel<Department> pList;
 	
-	private TitleService service;
 	
-	public TitleManager() {
-		service = new TitleService();
-		initialize();	
+	public DepartmentManager() {
+		service = new DepartmentService();
+		initialize();
 	}
-	
 	private void initialize() {
-		setTitle("직책 관리");
+		setTitle("부서 관리");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -55,8 +49,8 @@ public class TitleManager extends JFrame implements ActionListener  {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		
-		panel = new TitlePanel();
-		contentPane.add(panel);
+		panel = new DepartmentPanel();
+		contentPane.add((DepartmentPanel)panel);
 		
 		JPanel pBtn = new JPanel();
 		contentPane.add(pBtn);
@@ -69,8 +63,8 @@ public class TitleManager extends JFrame implements ActionListener  {
 		btnCancel.addActionListener(this);
 		pBtn.add(btnCancel);
 		
-		pList = new TitleTablePanel();
-		((TitleTablePanel)pList).setService(service);
+		pList = new DepartmentTablePanel();
+		((DepartmentTablePanel)pList).setService(service);
 		pList.loadData();
 		contentPane.add(pList);
 		
@@ -79,7 +73,7 @@ public class TitleManager extends JFrame implements ActionListener  {
 	}
 
 	private JPopupMenu createPopupMenu() {
-JPopupMenu popMenu = new JPopupMenu();
+		JPopupMenu popMenu = new JPopupMenu();
 		
 		JMenuItem updateItem = new JMenuItem("수정");
 		updateItem.addActionListener(popupMenuListner);
@@ -89,52 +83,54 @@ JPopupMenu popMenu = new JPopupMenu();
 		deleteItem.addActionListener(popupMenuListner);
 		popMenu.add(deleteItem);
 		
-		JMenuItem empListByDeptItem = new JMenuItem("동일직책 사원 보기");
-//		empListByitem.addActionListener(popupMenuListner);
+		JMenuItem empListByDeptItem = new JMenuItem("동일 부서 사원 보기");
+		empListByDeptItem.addActionListener(popupMenuListner);
 		popMenu.add(empListByDeptItem);
 		
 		return popMenu;
 	}
+	
+	
 	ActionListener popupMenuListner = new ActionListener() {
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-		try {
-			if(e.getActionCommand().equals("삭제")) {
-				Title title = pList.getItem();
-				service.removeTitle(title);
-				pList.loadData();
-				JOptionPane.showMessageDialog(null, title + "삭제 되었습니다.");
-			}
-			if(e.getActionCommand().equals("수정")) {
-				Title updateTitle = pList.getItem();
-				panel.setItem(updateTitle);
-				btnAdd.setText("수정");
-			}
+			try {
+				if(e.getActionCommand().equals("삭제")) {
+					Department delDept = pList.getItem();
+					service.removeDepartment(delDept);
+					pList.loadData();
+					JOptionPane.showMessageDialog(null, delDept + "삭제 되었습니다.");
+				}
+				if(e.getActionCommand().equals("수정")) {
+					Department updateDept = pList.getItem();
+					panel.setItem(updateDept);
+					btnAdd.setText("수정");
+				}
 
-			if (e.getActionCommand().contentEquals("동일 직책 사원 보기")) {
-			Title title = pList.getItem();
-			List<Employee> list = service.showEmployeeGroupByTitle(title);
-			
-			if (list == null) {
-				JOptionPane.showMessageDialog(null, "해당 사원이 없음", "동일 직책 사원", JOptionPane.INFORMATION_MESSAGE);
-				return;
+				if (e.getActionCommand().contentEquals("동일 부서 사원 보기")) {
+				Department dept = pList.getItem();
+				List<Employee> list = service.showEmployeeGroupByDepartment(dept);
+				
+				if (list == null) {
+					JOptionPane.showMessageDialog(null, "해당 사원이 없음", "동일 부서 사원", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+				
+				List<String> strList = list
+						.parallelStream()
+						.map( s->{ return String.format("%s(%d)", s.getEmpName(), s.getEmpNo()); })
+						.collect(Collectors.toList());
+				
+				JOptionPane.showMessageDialog(null, strList, "동일 부서 사원", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}catch (NotSelectedException | SqlConstraintException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}catch (Exception e1) {
+				e1.printStackTrace();
 			}
-			
-			List<String> strList = list
-					.parallelStream()
-					.map( s->{ return String.format("%s(%d)", s.getEmpName(), s.getEmpNo()); })
-					.collect(Collectors.toList());
-			
-			JOptionPane.showMessageDialog(null, strList, "동일 직책 사원", JOptionPane.INFORMATION_MESSAGE);
-			}
-		}catch (NotSelectedException | SqlConstraintException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		}catch (Exception e1) {
-			e1.printStackTrace();
 		}
-		}		
 	};
-	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
 			actionPerformedBtnCancel(e);
@@ -155,26 +151,23 @@ JPopupMenu popMenu = new JPopupMenu();
 		}
 	}
 	private void actionPerformedBtnUpdate(ActionEvent e) {
-		Title updateTitle = panel.getItem();
-		service.modifyTitle(updateTitle);
+		Department updateDept = panel.getItem();
+		service.modifyDepartment(updateDept);
 		pList.loadData();
 		panel.clearTf();
 		btnAdd.setText("추가");
-		JOptionPane.showMessageDialog(null, updateTitle.gettName() + "정보가 수정되었습니다.");
+		JOptionPane.showMessageDialog(null, updateDept.getDeptName() + "정보가 수정되었습니다.");
 		
 	}
 	protected void actionPerformedBtnAdd(ActionEvent e) {
-		Title title = panel.getItem();
-		service.addTitle(title);
+		Department department = panel.getItem();
+		service.addDepartment(department);
 		pList.loadData();
 		panel.clearTf();
-		JOptionPane.showMessageDialog(null, title + " 추가했습니다.");
+		JOptionPane.showMessageDialog(null, department + " 추가했습니다.");
 		
 	}
 	protected void actionPerformedBtnCancel(ActionEvent e) {
 		panel.clearTf();
 	}
 }
-
-	
-

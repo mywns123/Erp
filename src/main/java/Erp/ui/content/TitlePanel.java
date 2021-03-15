@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -14,7 +13,7 @@ import Erp.dto.Title;
 import Erp.ui.exception.InvalidCheckException;
 
 @SuppressWarnings("serial")
-public class TitlePanel extends JPanel {
+public class TitlePanel extends InterfaceItem<Title> {
 	private JTextField tftNO;
 	private JTextField tftName;
 
@@ -22,7 +21,7 @@ public class TitlePanel extends JPanel {
 		initialize();
 	}
 
-	private void initialize() {
+	public void initialize() {
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "직책 정보", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		setLayout(new GridLayout(0, 2, 10, 10));
@@ -44,27 +43,31 @@ public class TitlePanel extends JPanel {
 		add(tftName);
 	}
 
-	public void setTitle(Title title) {
-		tftNO.setText(title.gettNo()+"");
-		tftName.setText(title.gettName()+"");
+	@Override
+	public void clearTf() {
+		tftNO.setText("");
+		tftName.setText("");
 	}
 
-	public Title getTitle() {
+	@Override
+	public void setItem(Title item) {
+		tftNO.setText(item.gettNo()+"");
+		tftName.setText(item.gettName()+"");		
+	}
+
+	@Override
+	public Title getItem() {
 		validCheck();
 		int tNo = Integer.parseInt(tftNO.getText().trim());
 		String tName = tftName.getText().trim();
 		return new Title(tNo,tName);
 	}
 
-	private void validCheck() {
+	@Override
+	public void validCheck() {
 		if(tftNO.getText().contentEquals("") || tftName.getText().equals("")) {
 			throw new InvalidCheckException();
 		}
 		
-	}
-
-	public void clearTf() {
-		tftNO.setText("");
-		tftName.setText("");
 	}
 }

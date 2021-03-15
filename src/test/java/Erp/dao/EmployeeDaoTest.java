@@ -8,14 +8,14 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import Erp.dao.impl.EmployeeImpl;
+import Erp.dao.impl.EmployeeDaoImpl;
 import Erp.dto.Department;
 import Erp.dto.Employee;
 import Erp.dto.Title;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmployeeDaoTest {
 
-	private static EmployeeImpl dao = EmployeeImpl.getInstance();
+	private static EmployeeDaoImpl dao = EmployeeDaoImpl.getInstance();
 	@After
 	public void tearDown() throws Exception {
 	}

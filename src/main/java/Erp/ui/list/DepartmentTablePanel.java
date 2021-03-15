@@ -5,7 +5,8 @@ import javax.swing.SwingConstants;
 import Erp.dto.Department;
 import Erp.service.DepartmentService;
 
-public class DepartmentTable extends AbstractCustomTablePanel<Department> {
+@SuppressWarnings("serial")
+public class DepartmentTablePanel extends AbstractCustomTablePanel<Department> {
 	private DepartmentService service = new DepartmentService();
 	
 	@Override
@@ -31,5 +32,7 @@ public class DepartmentTable extends AbstractCustomTablePanel<Department> {
 	public String[] getColumnNames() {
 		return new String[] {"부서번호", "부서명", "위치"};
 	}
-
+	public void setService(DepartmentService service) {
+		this.service = service;		
+		}
 }

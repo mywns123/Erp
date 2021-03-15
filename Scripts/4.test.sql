@@ -6,3 +6,7 @@ from employee e
 join title t 
  on e.title  = t.tno 
  where  tno =5;
+ 
+
+select empNo,empName,title_no,title_name,manager_no,manager_name,salary,dept_no,dept_name,floor
+from vw_full_employee;

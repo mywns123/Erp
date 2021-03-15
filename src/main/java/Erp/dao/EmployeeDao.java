@@ -2,7 +2,9 @@ package Erp.dao;
 
 import java.util.List;
 
+import Erp.dto.Department;
 import Erp.dto.Employee;
+import Erp.dto.Title;
 
 public interface EmployeeDao {
 	List<Employee> selectEmployeeByAll();
@@ -12,6 +14,7 @@ public interface EmployeeDao {
 	int updateEmployee(Employee employee);
 	int deleteEmployee(int empNo);
 	
-	List<Employee> selectEmployeeByTitle(Employee employee);
+	List<Employee> selectEmployeeByTitle(Title title);
+	List<Employee> selectEmployeeByDept(Department dept);
 	
 }
