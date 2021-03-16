@@ -20,7 +20,7 @@ import Erp.dto.Title;
 import Erp.service.DepartmentService;
 import Erp.service.TitleService;
 import Erp.ui.content.DepartmentPanel;
-import Erp.ui.content.InterfaceItem;
+import Erp.ui.content.AbstractCotentPanel;
 import Erp.ui.content.TitlePanel;
 import Erp.ui.exception.InvalidCheckException;
 import Erp.ui.exception.NotSelectedException;
@@ -35,7 +35,7 @@ public class TitleManager extends JFrame implements ActionListener  {
 	private JPanel contentPane;
 	private JButton btnAdd;
 	
-	private InterfaceItem<Title> panel;
+	private AbstractCotentPanel<Title> panel;
 	private JButton btnCancel;
 	private AbstractCustomTablePanel<Title> pList;
 	
