@@ -53,12 +53,20 @@ ALTER TABLE erp.employee
 
 -- 세부정보
 CREATE TABLE erp.emp_detail (
-	empNo    INT        NULL COMMENT '사원번호', -- 사원번호
-	pic      LONGBLOB   NULL COMMENT '증명사진', -- 증명사진
-	gender   TINYINT(1) NULL COMMENT '성별', -- 성별
-	hiredate DATE       NULL COMMENT '입사일' -- 입사일
+	empNo    INT        NOT NULL COMMENT '사원번호', -- 사원번호
+	pic      LONGBLOB   NULL     COMMENT '증명사진', -- 증명사진
+	gender   TINYINT(1) NULL     COMMENT '성별', -- 성별
+	hiredate DATE       NULL     COMMENT '입사일', -- 입사일
+	pass     CHAR(41)   NULL     COMMENT '비밀번호' -- 비밀번호
 )
 COMMENT '세부정보';
+
+-- 세부정보
+ALTER TABLE erp.emp_detail
+	ADD CONSTRAINT PK_emp_detail -- 세부정보 기본키
+		PRIMARY KEY (
+			empNo -- 사원번호
+		);
 
 -- 사원
 ALTER TABLE erp.employee
@@ -99,38 +107,3 @@ ALTER TABLE erp.emp_detail
 		REFERENCES erp.employee ( -- 사원
 			empNo -- 사원번호
 		);
-		
-	
-	create view vw_title
-as
-select tno,tname, empNo, empName, manager,salary, dept
-from  employee e left join title t on e.title  = t.tno;
-
-create view vw_department 
-as
-select deptNO,deptName,floor, empNo, empName, manager,salary
-from  employee e left join department d on e.dept = d.deptNO;
-
-select tno,tname, empNo, empName, manager,salary, dept from vw_title;
-select deptNO,deptName,floor, empNo, empName, manager,salary from vw_department;
-
-
-create view vw_full_employee
-as
-select  e.empNo,
-e.empName,
-t.tno as title_no,
-t.tname as title_name,
-e.manager as manager_no,
-m.empName as manager_name,
-e.salary,
-d.deptNO as dept_no,
-d.deptName as dept_name,
-d.floor
-from  employee e join title t on e.title  = t.tno
-	 left join employee m on e.manager = m.empNo
-	join department d  on e.dept  = d.deptNO;
-	
-	
-	
-	
