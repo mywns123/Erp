@@ -16,14 +16,22 @@ public class EmployeeDetail {
 		this.empNo = empNo;
 	}
 	
-	public EmployeeDetail(int empNo, boolean gender, Date hiredate,String pass, byte[] pic) {
+	public EmployeeDetail(int empNo, boolean gender, Date hiredate, byte[] pic) {
+		this.empNo = empNo;
+		this.gender = gender;
+		this.hiredate = hiredate;	
+		this.pic = pic;
+	}
+	
+	
+	public EmployeeDetail(int empNo, boolean gender, Date hiredate, String pass, byte[] pic) {
 		this.empNo = empNo;
 		this.gender = gender;
 		this.hiredate = hiredate;
 		this.pass = pass;
 		this.pic = pic;
 	}
-	
+
 	public int getEmpNo() {
 		return empNo;
 	}

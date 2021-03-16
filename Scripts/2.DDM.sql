@@ -56,7 +56,7 @@ CREATE TABLE erp.emp_detail (
 	empNo    INT        NOT NULL COMMENT '사원번호', -- 사원번호
 	pic      LONGBLOB   NULL     COMMENT '증명사진', -- 증명사진
 	gender   TINYINT(1) NULL     COMMENT '성별', -- 성별
-	hiredate DATE       NULL     COMMENT '입사일', -- 입사일
+	hiredate DATETIME   NULL     COMMENT '입사일', -- 입사일
 	pass     CHAR(41)   NULL     COMMENT '비밀번호' -- 비밀번호
 )
 COMMENT '세부정보';
