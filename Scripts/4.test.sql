@@ -10,3 +10,8 @@ join title t
 
 select empNo,empName,title_no,title_name,manager_no,manager_name,salary,dept_no,dept_name,floor
 from vw_full_employee;
+
+
+-- pass 길이 확인
+-- 단발형 함수(Hash:MD5)
+SELECT password('afdssaggdgfsf'), length(password('afdssaggdgfsf')) FROM dual;

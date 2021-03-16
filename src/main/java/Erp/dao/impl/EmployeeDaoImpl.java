@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Erp.dao.EmployeeDao;
-import Erp.database.jdbcConn;
+import Erp.database.JdbcConn;
 import Erp.dto.Department;
 import Erp.dto.Employee;
 import Erp.dto.Title;
@@ -32,7 +32,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public List<Employee> selectEmployeeByAll() {
 		String sql = "select empNo,empName,title_no,title_name,manager_no,manager_name,salary,dept_no,dept_name,floor"
 				   + " from vw_full_employee";
-		try (Connection con = jdbcConn.getConnection();
+		try (Connection con = JdbcConn.getConnection();
 				PreparedStatement std = con.prepareStatement(sql);
 				ResultSet rs = std.executeQuery()) {
 			if (rs.next()) {
@@ -89,7 +89,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		String sql = "select empNo, empName, title as title_no ,manager as manager_no ,salary,dept as dept_no" +
 				     " from employee" +  
 				     " where empno = ?";
-		try (Connection con = jdbcConn.getConnection();
+		try (Connection con = JdbcConn.getConnection();
 				PreparedStatement std = con.prepareStatement(sql);) {
 			std.setInt(1, employee.getEmpNo());
 			try (ResultSet rs = std.executeQuery()) {
@@ -106,7 +106,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public int insertEmployee(Employee employee) {
 		String sql = "insert into employee  values(?,?,?,?,?,?);";
-		try (Connection con = jdbcConn.getConnection(); PreparedStatement std = con.prepareStatement(sql);) {
+		try (Connection con = JdbcConn.getConnection(); PreparedStatement std = con.prepareStatement(sql);) {
 			std.setInt(1, employee.getEmpNo());
 			std.setString(2, employee.getEmpName());
 			std.setInt(3, employee.getTitle().gettNo());
@@ -125,7 +125,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		String sql = "update employee " + 
 					 " set empname = ?, title = ?, manager = ?, salary = ?, dept = ?" + 
 					 " where empno =?;";
-		try (Connection con = jdbcConn.getConnection(); PreparedStatement std = con.prepareStatement(sql)) {
+		try (Connection con = JdbcConn.getConnection(); PreparedStatement std = con.prepareStatement(sql)) {
 			std.setString(1, employee.getEmpName());			
 			std.setInt(2, employee.getTitle().gettNo());
 			std.setInt(3, employee.getManager().getEmpNo());
@@ -143,7 +143,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		String sql = "delete" + 
 					 " from employee " + 
 					 " where empno = ?;";
-		try (Connection con = jdbcConn.getConnection();
+		try (Connection con = JdbcConn.getConnection();
 				PreparedStatement std = con.prepareStatement(sql)) {
 			std.setInt(1, employee.getEmpNo());
 			return std.executeUpdate();
@@ -160,7 +160,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			   	   + "  join title t"  
 				   + "    on e.title  = t.tno"  
 				   + " where tno = ?";
-		try(Connection con = jdbcConn.getConnection();
+		try(Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);){
 			pstmt.setInt(1, title.gettNo());
 			try(ResultSet rs = pstmt.executeQuery()){
@@ -186,7 +186,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				   + "  join department d"  
 				   + "    on e.dept = d.deptNo "
 				   + " where dept = ?";
-		try(Connection con = jdbcConn.getConnection();
+		try(Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);){
 			pstmt.setInt(1, dept.getDeptno());
 			try(ResultSet rs = pstmt.executeQuery()){

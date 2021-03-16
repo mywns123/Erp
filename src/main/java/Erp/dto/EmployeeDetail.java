@@ -7,10 +7,10 @@ public class EmployeeDetail {
 	private int empNo;
 	private boolean gender;
 	private Date hiredate;
+	private String pass;
 	private byte[] pic;
 	
 	public EmployeeDetail() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public EmployeeDetail(int empNo) {
@@ -51,8 +51,17 @@ public class EmployeeDetail {
 	public byte[] getPic() {
 		return pic;
 	}
+	
 	public void setPic(byte[] pic) {
 		this.pic = pic;
+	}
+	
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
 	
 	@Override
@@ -60,7 +69,5 @@ public class EmployeeDetail {
 		return String.format("EmpDetail [empNo=%s, gender=%s, hiredate=%s, pic=%s]", empNo, gender, hiredate,
 				Arrays.toString(pic));
 	}
-	
-	
 	
 }

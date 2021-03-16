@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class jdbcConn {
+public class JdbcConn {
 	
 	public static Connection getConnection() {
 		String propertiesPath = "db.properties";
