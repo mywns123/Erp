@@ -33,15 +33,15 @@ import Erp.ui.list.TitleTablePanel;
 public class TitleManager extends JFrame implements ActionListener  {
 	
 	private JPanel contentPane;
-	private JButton btnAdd;
-	
-	private AbstractCotentPanel<Title> panel;
+	private JButton btnAdd;	
+	private TitlePanel panel;
 	private JButton btnCancel;
-	private AbstractCustomTablePanel<Title> pList;
+	private TitleTablePanel pList;
 	
 	private TitleService service;
 	
 	public TitleManager() {
+	
 		service = new TitleService();
 		initialize();	
 	}
