@@ -60,7 +60,8 @@ public class EmployeeDaoTest {
 	public void testDeleteEmployee() {
 		
 		System.out.printf("%s()%n", "testDeleteEmployee");
-		int res = dao.deleteEmployee(1004);
+		Employee newEmp = new Employee(1004);
+		int res = dao.deleteEmployee(newEmp);
 		Assert.assertEquals(1, res);
 		dao.selectEmployeeByAll().stream().forEach(System.out::println);
 	}
