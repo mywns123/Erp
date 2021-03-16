@@ -35,10 +35,10 @@ public class Main extends JFrame implements ActionListener {
 		});
 	}
 
-	
 	public Main() {
 		initialize();
 	}
+
 	private void initialize() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 150);
@@ -71,16 +71,19 @@ public class Main extends JFrame implements ActionListener {
 			actionPerformedBtnTitle(e);
 		}
 	}
+	
 	protected void actionPerformedBtnTitle(ActionEvent e) {
 		TitleManagerUI frame = new TitleManagerUI();
 		setTitle("직책관리");
 		frame.setVisible(true);
 	}
+	
 	protected void actionPerformedBtnDepartment(ActionEvent e) {
 		DepartmentManagerUI frame = new DepartmentManagerUI();
 		setTitle("부서관리");
 		frame.setVisible(true);
 	}
+	
 	protected void actionPerformedBtnEmployee(ActionEvent e) {
 		EmployeeManagerUI frame = new EmployeeManagerUI();
 		setTitle("사원관리");
