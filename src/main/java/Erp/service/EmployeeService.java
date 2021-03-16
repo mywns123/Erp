@@ -13,26 +13,35 @@ import Erp.dto.Employee;
 import Erp.dto.Title;
 
 public class EmployeeService {
- private DepartmentDao deptDao = DepartmentDaoImpl.getInstance();
- private TitleDao titleDao = TitleDaoImpl.getInstance();
- private EmployeeDao empDao = EmployeeDaoImpl.getInstance();
- 
- public List<Department> showDeptList(){
-	 return deptDao.selectDepartmentByAll();
- }
- 
- public List<Title> showTList(){
-	 return titleDao.selectTitleByAll();
- }
- 
- public List<Employee> showEmpList(){
-	 return empDao.selectEmployeeByAll();
- }
+	private DepartmentDao deptDao = DepartmentDaoImpl.getInstance();
+	private TitleDao titleDao = TitleDaoImpl.getInstance();
+	private EmployeeDao empDao = EmployeeDaoImpl.getInstance();
 
-public List<Employee> showEmployeeByDept(Department dept) {
-	return empDao.selectEmployeeByDept(dept);
-}
- 
- 
- 
+	public List<Department> showDeptList() {
+		return deptDao.selectDepartmentByAll();
+	}
+
+	public List<Title> showTList() {
+		return titleDao.selectTitleByAll();
+	}
+
+	public List<Employee> showEmpList() {
+		return empDao.selectEmployeeByAll();
+	}
+
+	public List<Employee> showEmployeeByDept(Department dept) {
+		return empDao.selectEmployeeByDept(dept);
+	}
+
+	public int removeEmployee(Employee employee) {
+		return empDao.deleteEmployee(employee);
+	}
+
+	public int modifyEmployee(Employee employee) {
+		return empDao.updateEmployee(employee);
+	}
+
+	public int addEmployee(Employee employee) {
+		return empDao.insertEmployee(employee);
+	}
 }

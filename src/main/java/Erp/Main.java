@@ -10,8 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Erp.ui.DepartmentManager;
-import Erp.ui.TitleManager;
+import Erp.ui.DepartmentManagerUI;
+import Erp.ui.EmployeeManagerUI;
+import Erp.ui.TitleManagerUI;
 
 @SuppressWarnings("serial")
 public class Main extends JFrame implements ActionListener {
@@ -71,14 +72,18 @@ public class Main extends JFrame implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtnTitle(ActionEvent e) {
-		TitleManager frame = new TitleManager();
+		TitleManagerUI frame = new TitleManagerUI();
+		setTitle("직책관리");
 		frame.setVisible(true);
 	}
 	protected void actionPerformedBtnDepartment(ActionEvent e) {
-		DepartmentManager frame = new DepartmentManager();
+		DepartmentManagerUI frame = new DepartmentManagerUI();
+		setTitle("부서관리");
 		frame.setVisible(true);
 	}
 	protected void actionPerformedBtnEmployee(ActionEvent e) {
-		
+		EmployeeManagerUI frame = new EmployeeManagerUI();
+		setTitle("사원관리");
+		frame.setVisible(true);
 	}
 }

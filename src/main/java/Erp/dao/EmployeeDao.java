@@ -12,9 +12,10 @@ public interface EmployeeDao {
 
 	int insertEmployee(Employee employee);
 	int updateEmployee(Employee employee);
-	int deleteEmployee(int empNo);
+	int deleteEmployee(Employee employee);
 	
 	List<Employee> selectEmployeeByTitle(Title title);
 	List<Employee> selectEmployeeByDept(Department dept);
+
 	
 }

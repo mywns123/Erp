@@ -12,6 +12,7 @@ import Erp.database.jdbcConn;
 import Erp.dto.Department;
 import Erp.dto.Employee;
 import Erp.dto.Title;
+import Erp.ui.exception.SqlConstraintException;
 
 public class EmployeeDaoImpl implements EmployeeDao {
 
@@ -133,19 +134,18 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			std.setInt(6, employee.getEmpNo());
 			return std.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new SqlConstraintException(e.getMessage(),e);
 		}
-		return 0;
 	}
 
 	@Override
-	public int deleteEmployee(int empNo) {
+	public int deleteEmployee(Employee employee) {
 		String sql = "delete" + 
 					 " from employee " + 
 					 " where empno = ?;";
 		try (Connection con = jdbcConn.getConnection();
 				PreparedStatement std = con.prepareStatement(sql)) {
-			std.setInt(1, empNo);
+			std.setInt(1, employee.getEmpNo());
 			return std.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
