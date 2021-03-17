@@ -51,8 +51,8 @@ public class TitlePanel extends AbstractCotentPanel<Title> {
 
 	@Override
 	public void setItem(Title item) {
-		tftNO.setText(item.gettNo()+"");
-		tftName.setText(item.gettName()+"");		
+		tftNO.setText(item.gettNo() + "");
+		tftName.setText(item.gettName() + "");
 	}
 
 	@Override
@@ -60,14 +60,14 @@ public class TitlePanel extends AbstractCotentPanel<Title> {
 		validCheck();
 		int tNo = Integer.parseInt(tftNO.getText().trim());
 		String tName = tftName.getText().trim();
-		return new Title(tNo,tName);
+		return new Title(tNo, tName);
 	}
 
 	@Override
 	public void validCheck() {
-		if(tftNO.getText().contentEquals("") || tftName.getText().equals("")) {
+		if (tftNO.getText().contentEquals("") || tftName.getText().equals("")) {
 			throw new InvalidCheckException();
 		}
-		
 	}
+
 }

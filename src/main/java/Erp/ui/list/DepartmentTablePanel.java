@@ -12,6 +12,10 @@ import Erp.ui.exception.NotSelectedException;
 public class DepartmentTablePanel extends AbstractCustomTablePanel<Department> {
 	private DepartmentService service = new DepartmentService();
 	
+	public void setService(DepartmentService service) {
+		this.service = service;		
+	}
+	
 	@Override
 	public void initList() {
 		list =service.showDepartment();		
@@ -23,7 +27,6 @@ public class DepartmentTablePanel extends AbstractCustomTablePanel<Department> {
 		setTableCellAlign(SwingConstants.CENTER, 0, 1, 2);
 		// 컬럼 너비 조정
 		setTableCellWidth(100, 100,100);
-
 	}
 
 	@Override
@@ -34,10 +37,7 @@ public class DepartmentTablePanel extends AbstractCustomTablePanel<Department> {
 	@Override
 	public String[] getColumnNames() {
 		return new String[] {"부서번호", "부서명", "위치"};
-	}
-	public void setService(DepartmentService service) {
-		this.service = service;		
-		}
+	}	
 
 	@Override
 	public Department getItem() {
@@ -49,4 +49,5 @@ public class DepartmentTablePanel extends AbstractCustomTablePanel<Department> {
 		}
 		return list.get(list.indexOf(new Department(deptNo)));
 	}
+	
 }

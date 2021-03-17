@@ -10,6 +10,15 @@ import Erp.ui.exception.NotSelectedException;
 public class TitleTablePanel extends AbstractCustomTablePanel<Title> {
 	private TitleService service;
 
+	public void setService(TitleService service) {
+		this.service = service;
+	}
+
+	@Override
+	public void initList() {
+		list = service.showTitles();
+	}
+
 	@Override
 	protected void setAlignAndWidth() {
 		// 컬럼내용 정렬
@@ -20,35 +29,23 @@ public class TitleTablePanel extends AbstractCustomTablePanel<Title> {
 
 	@Override
 	public Object[] toArray(Title t) {
-		return new Object[] { t.gettNo() ,  t.gettName() };
+		return new Object[] { t.gettNo(), t.gettName() };
 	}
 
 	@Override
 	public String[] getColumnNames() {
-		return new String[] {"직책번호", "직책명"};
-	}
-
-	@Override
-	public void initList() {
-		list = service.showTitles();
-	}
-
-	public void setService(TitleService service) {
-	this.service = service;		
+		return new String[] { "직책번호", "직책명" };
 	}
 
 	@Override
 	public Title getItem() {
 		int row = table.getSelectedRow();
 		int titleNo = (int) table.getValueAt(row, 0);
-		
-		if(row == -1) {
+
+		if (row == -1) {
 			throw new NotSelectedException();
 		}
 		return list.get(list.indexOf(new Title(titleNo)));
 	}
-	
-	
-	
 
 }

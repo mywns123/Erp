@@ -10,6 +10,10 @@ import Erp.ui.exception.NotSelectedException;
 public class EmployeeTablePanel extends AbstractCustomTablePanel<Employee> {
 	private EmployeeService service;
 	
+	public void setService(EmployeeService service) {
+		this.service = service;
+	}
+
 	@Override
 	public void initList() {
 		list = service.showEmpList();		
@@ -41,10 +45,6 @@ public class EmployeeTablePanel extends AbstractCustomTablePanel<Employee> {
 		return new String[] {"사원번호", "사원명", "직책", "직속상사", "급여", "부서"};
 	}
 
-	public void setService(EmployeeService service) {
-		this.service = service;		
-		}
-
 	@Override
 	public Employee getItem() {
 		int row = table.getSelectedRow();
@@ -55,4 +55,5 @@ public class EmployeeTablePanel extends AbstractCustomTablePanel<Employee> {
 		}
 		return list.get(list.indexOf(new Employee(empNo)));
 	}
+	
 }

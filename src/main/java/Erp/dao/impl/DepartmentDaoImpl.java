@@ -26,8 +26,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	public List<Department> selectDepartmentByAll() {
 		String sql = "select deptNO,deptName,floor from department";
 		try (Connection con = JdbcConn.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery()) {
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
 			if (rs.next()) {
 				List<Department> list = new ArrayList<>();
 				do {
@@ -53,7 +53,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	public Department selectDepartmentByNo(Department department) {
 		String sql = "select deptNO,deptName,floor from department where deptNO = ?";
 		try (Connection con = JdbcConn.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql)) {
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, department.getDeptno());
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
@@ -70,7 +70,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	public int insertDepartment(Department department) {
 		String sql = "insert into Department values(?,?,?)";
 		try (Connection con = JdbcConn.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql)) {
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, department.getDeptno());
 			pstmt.setString(2, department.getDeptName());
 			pstmt.setInt(3, department.getFloor());
@@ -85,7 +85,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	public int updateDepartment(Department department) {
 		String sql = "update  Department  set DeptName =? where Deptno =?";
 		try (Connection con = JdbcConn.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql)) {
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, department.getDeptName());
 			pstmt.setInt(2, department.getDeptno());
 			return pstmt.executeUpdate();
@@ -99,7 +99,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	public int deleteDepartment(int deptno) {
 		String sql = "delete  from Department where Deptno=?";
 		try (Connection con = JdbcConn.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql)) {
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, deptno);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -107,5 +107,5 @@ public class DepartmentDaoImpl implements DepartmentDao {
 		}
 		return 0;
 	}
-
+	
 }

@@ -12,32 +12,27 @@ import Erp.dto.Title;
 public class TitleService {
 	private TitleDao dao = TitleDaoImpl.getInstance();
 	private EmployeeDao dao1 = EmployeeDaoImpl.getInstance();
-	
-	public List<Title> showTitles(){
+
+	public List<Title> showTitles() {
 		return dao.selectTitleByAll();
-		}
+	}
+
 	public void addTitle(Title title) {
 		dao.insertTitle(title);
 	}
-	
+
 	public void removeTitle(Title title) {
 		dao.deleteTitle(title.gettNo());
 	}
-	
-	
-	
-//	public List<Employee> showEmployeeByTitle(Employee employee){
-//		return dao1.selectEmployeeByTitle(employee);
-//		}
+
 	public List<Employee> showEmployeeGroupByTitle(Title title) {
-		
+
 		return dao1.selectEmployeeByTitle(title);
 	}
+
 	public void modifyTitle(Title title) {
 		dao.updateTitle(title);
-		
+
 	}
-	
-	
-	
+
 }

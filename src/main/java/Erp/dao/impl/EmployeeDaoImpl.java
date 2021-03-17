@@ -22,7 +22,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	public static EmployeeDaoImpl getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new EmployeeDaoImpl();
 		}
 		return instance;
@@ -31,7 +31,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public List<Employee> selectEmployeeByAll() {
 		String sql = "select empNo,empName,title_no,title_name,manager_no,manager_name,salary,dept_no,dept_name,floor"
-				   + " from vw_full_employee";
+				+ " from vw_full_employee";
 		try (Connection con = JdbcConn.getConnection();
 				PreparedStatement std = con.prepareStatement(sql);
 				ResultSet rs = std.executeQuery()) {
@@ -51,44 +51,46 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	private Employee getEmployee(ResultSet rs) throws SQLException {
 		int empNo = rs.getInt("empno");
 		String empName = rs.getString("empname");
-		
-		Title title = null;		
-		Employee manager = null;		
-		int salary = 0;	
+		Title title = null;
+		Employee manager = null;
+		int salary = 0;
 		Department dept = null;
-		
-		try{
-		title = new Title(rs.getInt("title_no"));
-		 manager = new Employee(rs.getInt("manager_no"));	
-		 salary = rs.getInt("salary");
-		 dept = new Department(rs.getInt("dept_no"));
-		}catch (SQLException e) {}		
-				
-		try{
+
+		try {
+			title = new Title(rs.getInt("title_no"));
+			manager = new Employee(rs.getInt("manager_no"));
+			salary = rs.getInt("salary");
+			dept = new Department(rs.getInt("dept_no"));
+		} catch (SQLException e) {
+		}
+
+		try {
 			title.settName(rs.getString("title_name"));
-		}catch (SQLException e) {}
-		
-		
-		try{
+		} catch (SQLException e) {
+		}
+
+		try {
 			manager.setEmpName(rs.getNString("manager_name"));
-		}catch (SQLException e) {}
-		
-		try{
+		} catch (SQLException e) {
+		}
+
+		try {
 			dept.setDeptName(rs.getNString("dept_name"));
-		}catch (SQLException e) {}
-		
-		try{
+		} catch (SQLException e) {
+		}
+
+		try {
 			dept.setFloor(rs.getInt("floor"));
-		}catch (SQLException e) {}		
-		
+		} catch (SQLException e) {
+		}
+
 		return new Employee(empNo, empName, title, manager, salary, dept);
 	}
 
 	@Override
 	public Employee selectEmployeeByNo(Employee employee) {
-		String sql = "select empNo, empName, title as title_no ,manager as manager_no ,salary,dept as dept_no" +
-				     " from employee" +  
-				     " where empno = ?";
+		String sql = "select empNo, empName, title as title_no ,manager as manager_no ,salary,dept as dept_no"
+				+ " from employee" + " where empno = ?";
 		try (Connection con = JdbcConn.getConnection();
 				PreparedStatement std = con.prepareStatement(sql);) {
 			std.setInt(1, employee.getEmpNo());
@@ -106,7 +108,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public int insertEmployee(Employee employee) {
 		String sql = "insert into employee  values(?,?,?,?,?,?);";
-		try (Connection con = JdbcConn.getConnection(); PreparedStatement std = con.prepareStatement(sql);) {
+		try (Connection con = JdbcConn.getConnection();
+				PreparedStatement std = con.prepareStatement(sql);) {
 			std.setInt(1, employee.getEmpNo());
 			std.setString(2, employee.getEmpName());
 			std.setInt(3, employee.getTitle().gettNo());
@@ -122,11 +125,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public int updateEmployee(Employee employee) {
-		String sql = "update employee " + 
-					 " set empname = ?, title = ?, manager = ?, salary = ?, dept = ?" + 
-					 " where empno =?;";
-		try (Connection con = JdbcConn.getConnection(); PreparedStatement std = con.prepareStatement(sql)) {
-			std.setString(1, employee.getEmpName());			
+		String sql = "update employee " + " set empname = ?, title = ?, manager = ?, salary = ?, dept = ?"
+				+ " where empno =?;";
+		try (Connection con = JdbcConn.getConnection();
+				PreparedStatement std = con.prepareStatement(sql)) {
+			std.setString(1, employee.getEmpName());
 			std.setInt(2, employee.getTitle().gettNo());
 			std.setInt(3, employee.getManager().getEmpNo());
 			std.setInt(4, employee.getSalary());
@@ -134,15 +137,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			std.setInt(6, employee.getEmpNo());
 			return std.executeUpdate();
 		} catch (SQLException e) {
-			throw new SqlConstraintException(e.getMessage(),e);
+			throw new SqlConstraintException(e.getMessage(), e);
 		}
 	}
 
 	@Override
 	public int deleteEmployee(Employee employee) {
-		String sql = "delete" + 
-					 " from employee " + 
-					 " where empno = ?;";
+		String sql = "delete" + " from employee " + " where empno = ?;";
 		try (Connection con = JdbcConn.getConnection();
 				PreparedStatement std = con.prepareStatement(sql)) {
 			std.setInt(1, employee.getEmpNo());
@@ -155,20 +156,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public List<Employee> selectEmployeeByTitle(Title title) {
-		String sql = "select empname, empno"  
-				   + "  from employee e"  
-			   	   + "  join title t"  
-				   + "    on e.title  = t.tno"  
-				   + " where tno = ?";
-		try(Connection con = JdbcConn.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);){
+		String sql = "select empname, empno" + "  from employee e" + "  join title t" + "    on e.title  = t.tno"
+				+ " where tno = ?";
+		try (Connection con = JdbcConn.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setInt(1, title.gettNo());
-			try(ResultSet rs = pstmt.executeQuery()){
+			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
 					List<Employee> list = new ArrayList<>();
 					do {
 						list.add(getEmployee(rs));
-					}while(rs.next());
+					} while (rs.next());
 					return list;
 				}
 			}
@@ -176,25 +174,21 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			e.printStackTrace();
 		}
 		return null;
-
-}
+	}
 
 	@Override
 	public List<Employee> selectEmployeeByDept(Department dept) {
-		String sql = "select empname, empno" 
-			  	   + "  from employee e "  
-				   + "  join department d"  
-				   + "    on e.dept = d.deptNo "
-				   + " where dept = ?";
-		try(Connection con = JdbcConn.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);){
+		String sql = "select empname, empno" + "  from employee e " + "  join department d"
+				+ "    on e.dept = d.deptNo " + " where dept = ?";
+		try (Connection con = JdbcConn.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setInt(1, dept.getDeptno());
-			try(ResultSet rs = pstmt.executeQuery()){
+			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
 					List<Employee> list = new ArrayList<>();
 					do {
 						list.add(getEmployee(rs));
-					}while(rs.next());
+					} while (rs.next());
 					return list;
 				}
 			}
@@ -204,6 +198,4 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return null;
 	}
 	
-
 }
-	

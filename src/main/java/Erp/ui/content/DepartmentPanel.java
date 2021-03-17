@@ -17,35 +17,33 @@ public class DepartmentPanel extends AbstractCotentPanel<Department> {
 	private JTextField tfFloor;
 
 	public DepartmentPanel() {
-
 		initialize();
 	}
-	
-	
+
 	private void initialize() {
 		setBorder(new TitledBorder(null, "부서 정보", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new GridLayout(0, 2, 10, 10));
-		
+
 		JLabel lblDeptNo = new JLabel("부서번호");
 		lblDeptNo.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(lblDeptNo);
-		
+
 		tfDeptNo = new JTextField();
 		add(tfDeptNo);
 		tfDeptNo.setColumns(10);
-		
+
 		JLabel lblDeptName = new JLabel("부서명");
 		lblDeptName.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(lblDeptName);
-		
+
 		tfDeptName = new JTextField();
 		tfDeptName.setColumns(10);
 		add(tfDeptName);
-		
+
 		JLabel lblFloor = new JLabel("위치");
 		lblFloor.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(lblFloor);
-		
+
 		tfFloor = new JTextField();
 		tfFloor.setColumns(10);
 		add(tfFloor);
@@ -56,7 +54,7 @@ public class DepartmentPanel extends AbstractCotentPanel<Department> {
 		tfDeptNo.setText("");
 		tfDeptName.setText("");
 		tfFloor.setText("");
-		
+
 		if (!tfDeptNo.isEditable()) {
 			tfDeptNo.setEditable(true);
 		}
@@ -68,7 +66,7 @@ public class DepartmentPanel extends AbstractCotentPanel<Department> {
 //		tfDeptNo.setText(department.getDeptNo() + "");
 		tfDeptName.setText(item.getDeptName());
 		tfFloor.setText(item.getFloor() + "");
-		
+
 		tfDeptNo.setEditable(false);
 	}
 
@@ -83,12 +81,11 @@ public class DepartmentPanel extends AbstractCotentPanel<Department> {
 
 	@Override
 	public void validCheck() {
-		if (tfDeptNo.getText().contentEquals("") 
-				|| tfDeptName.getText().equals("")
-				|| tfFloor.getText().equals("")) {
+		if (tfDeptNo.getText().contentEquals("") ||
+				tfDeptName.getText().equals("") ||
+				tfFloor.getText().equals("")) {
 			throw new InvalidCheckException();
-		}		
-		
+		}
 	}
 
 }

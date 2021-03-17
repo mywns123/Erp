@@ -7,23 +7,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-
-
 public class JdbcConn {
 	public static Connection getConnection() {
 		String propertiesPath = "db.properties";
 		Connection con = null;
-		try(InputStream in = ClassLoader.getSystemResourceAsStream(propertiesPath)){
+		try (InputStream in = ClassLoader.getSystemResourceAsStream(propertiesPath)) {
 			Properties prop = new Properties();
 			prop.load(in);
 			con = DriverManager.getConnection(prop.getProperty("url"), prop);
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return con;
 	}
+	
 }

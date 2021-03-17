@@ -53,7 +53,7 @@ public class TitleDaoImpl implements TitleDao {
 	public Title selectTitleByNo(Title title) {
 		String sql = "select tno,tname from title where tno=?";
 		try (Connection con = JdbcConn.getConnection();
-PreparedStatement pstmt = con.prepareStatement(sql)) {
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, title.gettNo());
 //			System.out.println(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()) {
@@ -77,13 +77,14 @@ PreparedStatement pstmt = con.prepareStatement(sql)) {
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new SqlConstraintException(e.getMessage(), e);
-		}		
+		}
 	}
 
 	@Override
 	public int updateTitle(Title title) {
 		String sql = "update  title  set tname =? where tno =?";
-		try (Connection con = JdbcConn.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = JdbcConn.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, title.gettName());
 			pstmt.setInt(2, title.gettNo());
 			return pstmt.executeUpdate();
@@ -96,7 +97,8 @@ PreparedStatement pstmt = con.prepareStatement(sql)) {
 	@Override
 	public int deleteTitle(int titleNo) {
 		String sql = "delete  from title where tno=?";
-		try (Connection con = JdbcConn.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = JdbcConn.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, titleNo);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -106,5 +108,5 @@ PreparedStatement pstmt = con.prepareStatement(sql)) {
 		}
 //		return 0;
 	}
-
+	
 }

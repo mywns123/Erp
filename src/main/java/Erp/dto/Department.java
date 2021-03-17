@@ -4,24 +4,20 @@ public class Department {
 	private int deptNo;
 	private String deptName;
 	private int floor;
-	
-//	private List<Employee> list;
 
+//	private List<Employee> list;
 	public Department(int deptNo, String deptName) {
 		this.deptNo = deptNo;
 		this.deptName = deptName;
 	}
 
-
 	public Department() {
 		// TODO Auto-generated constructor stub
 	}
-	
 
 	public Department(int deptNo) {
 		this.deptNo = deptNo;
 	}
-
 
 	public Department(int deptNo, String deptName, int floor) {
 		this.deptNo = deptNo;
@@ -53,12 +49,10 @@ public class Department {
 		this.floor = floor;
 	}
 
-
 	@Override
 	public String toString() {
-		return String.format("%s(%d)",deptName, deptNo);
+		return String.format("%s(%d)", deptName, deptNo);
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -67,7 +61,6 @@ public class Department {
 		result = prime * result + deptNo;
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -82,7 +75,5 @@ public class Department {
 			return false;
 		return true;
 	}
-
 	
-
 }

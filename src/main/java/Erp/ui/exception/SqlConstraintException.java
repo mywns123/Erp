@@ -12,12 +12,11 @@ public class SqlConstraintException extends RuntimeException {
 	}
 
 	public SqlConstraintException(Throwable cause) {
-		super("참조하는 레코드가 존재합니다.",cause);
+		super("참조하는 레코드가 존재합니다.", cause);
 	}
 
 	public SqlConstraintException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	
 }

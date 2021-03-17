@@ -10,7 +10,6 @@ public class Title {
 
 	public Title(int tNo) {
 		this.tNo = tNo;
-		
 	}
 
 	public Title(String tName) {
@@ -65,7 +64,4 @@ public class Title {
 		return true;
 	}
 
-	
-	
-	
 }

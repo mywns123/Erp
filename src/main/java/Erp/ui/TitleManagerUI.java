@@ -18,8 +18,7 @@ import Erp.ui.list.TitleTablePanel;
 public class TitleManagerUI extends AbstractManagerUI<Title> {
 
 	private TitleService service;
-	
-	
+
 	public TitleManagerUI() {
 		empListByTitleItem.setText(AbstractManagerUI.TITLE_MENU);
 	}
@@ -27,14 +26,12 @@ public class TitleManagerUI extends AbstractManagerUI<Title> {
 	@Override
 	protected void setService() {
 		service = new TitleService();
-		
 	}
 
 	@Override
 	protected void tableLoadData() {
-		((TitleTablePanel)pList).setService(service);
+		((TitleTablePanel) pList).setService(service);
 		pList.loadData();
-		
 	}
 
 	@Override
@@ -51,19 +48,17 @@ public class TitleManagerUI extends AbstractManagerUI<Title> {
 	protected void actionPerformdMenuGubun() {
 		Title title = pList.getItem();
 		List<Employee> list = service.showEmployeeGroupByTitle(title);
-		
+
 		if (list == null) {
 			JOptionPane.showMessageDialog(null, "해당 사원이 없음", "동일 직책 사원", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		
-		List<String> strList = list
-				.parallelStream()
-				.map( s->{ return String.format("%s(%d)", s.getEmpName(), s.getEmpNo()); })
-				.collect(Collectors.toList());
-		
+
+		List<String> strList = list.parallelStream().map(s -> {
+			return String.format("%s(%d)", s.getEmpName(), s.getEmpNo());
+		}).collect(Collectors.toList());
+
 		JOptionPane.showMessageDialog(null, strList, "동일 직책 사원", JOptionPane.INFORMATION_MESSAGE);
-		
 	}
 
 	@Override
@@ -71,7 +66,6 @@ public class TitleManagerUI extends AbstractManagerUI<Title> {
 		Title updateTitle = pList.getItem();
 		pContent.setItem(updateTitle);
 		btnAdd.setText("수정");
-		
 	}
 
 	@Override
@@ -80,7 +74,6 @@ public class TitleManagerUI extends AbstractManagerUI<Title> {
 		service.removeTitle(title);
 		pList.loadData();
 		JOptionPane.showMessageDialog(null, title + "삭제 되었습니다.");
-		
 	}
 
 	@Override
@@ -91,7 +84,6 @@ public class TitleManagerUI extends AbstractManagerUI<Title> {
 		pContent.clearTf();
 		btnAdd.setText("추가");
 		JOptionPane.showMessageDialog(null, updateTitle.gettName() + "정보가 수정되었습니다.");
-		
 	}
 
 	@Override
@@ -101,7 +93,6 @@ public class TitleManagerUI extends AbstractManagerUI<Title> {
 		pList.loadData();
 		pContent.clearTf();
 		JOptionPane.showMessageDialog(null, title + " 추가했습니다.");
-		
 	}
 
 }
