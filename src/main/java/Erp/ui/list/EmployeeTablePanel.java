@@ -21,20 +21,19 @@ public class EmployeeTablePanel extends AbstractCustomTablePanel<Employee> {
 		setTableCellAlign(SwingConstants.CENTER, 0, 1,2,3,5);
 		setTableCellAlign(SwingConstants.RIGHT, 4);
 		// 컬럼 너비 조정
-		setTableCellWidth(100, 250,100,100,100,100);
-		
+		setTableCellWidth(100, 250,100,100,100,100);		
 	}
 
 	@Override
 	public Object[] toArray(Employee t) {
 		return new Object[] {
-				t.getEmpNo(),
-				t.getEmpName(),
-				String.format("%s(%d)", t.getTitle().gettName(),t.getTitle().gettNo()),
-				String.format("%s(%d)", t.getManager().getEmpName(), t.getManager().getEmpNo()),
-				String.format("%d", t.getSalary()),				
-				String.format("%s(%d)",t.getDept().getDeptName(),t.getDept().getDeptno())				
-						};
+				t.getEmpNo()
+				,t.getEmpName()
+				,String.format("%s(%d)", t.getTitle().gettName(),t.getTitle().gettNo())
+				,t.getManager().getEmpNo()==0 ?"":String.format("%s(%d)", t.getManager().getEmpName(), t.getManager().getEmpNo())
+				,String.format("%,d", t.getSalary())
+				,String.format("%s(%d)",t.getDept().getDeptName(),t.getDept().getDeptno())				
+		};
 	}
 
 	@Override
