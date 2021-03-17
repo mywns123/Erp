@@ -28,7 +28,7 @@ public class EmployeeDetailUI extends JFrame implements ActionListener {
 	
 	
 	public EmployeeDetailUI(boolean isBtns,EmployeeDetailService service) {
-		service = new EmployeeDetailService();
+		this.service = service;
 		initialize(isBtns);
 	}
 	
@@ -99,6 +99,7 @@ public class EmployeeDetailUI extends JFrame implements ActionListener {
 	private void actionPerformedBtnUpdate(ActionEvent e) {
 		EmployeeDetail updateEmpDetail = pItem.getItem();
 		service.modifyEmployeeDetail(updateEmpDetail);
+		pItem.clearTf();
 		JOptionPane.showMessageDialog(null, "수정완료");	
 		dispose();
 	}
@@ -107,9 +108,10 @@ public class EmployeeDetailUI extends JFrame implements ActionListener {
 		// 1.입력된
 		// 2. service에 적용
 		EmployeeDetail newEmpDetail = pItem.getItem();
-		service.addEmployeeDetail(newEmpDetail);				
-		JOptionPane.showMessageDialog(null, "추가완료");
+		service.addEmployeeDetail(newEmpDetail);
 		pItem.clearTf();
+		JOptionPane.showMessageDialog(null, "추가완료");
+		dispose();
 	}
 	protected void actionPerformedBtnCancel(ActionEvent e) {
 		pItem.clearTf();

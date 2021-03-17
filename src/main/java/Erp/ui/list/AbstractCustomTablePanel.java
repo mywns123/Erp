@@ -15,8 +15,6 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import Erp.ui.exception.NotSelectedException;
-
 @SuppressWarnings("serial")
 public abstract class AbstractCustomTablePanel<T> extends JPanel {
 	protected JTable table;
@@ -26,29 +24,25 @@ public abstract class AbstractCustomTablePanel<T> extends JPanel {
 		initialize();		
 	}
 	
-	public T getItem() {
-		int idx = table.getSelectedRow();
+	public abstract T getItem();
+	/*
+	{int idx = table.getSelectedRow();
 		if(idx == -1) {
 			throw new NotSelectedException();
 		}
-		return list.get(idx);
-	}
+		return list.get(idx);}
+	*/
 	
 	public void loadData() {
 		initList();
 		setList();
 	}
+	
 	public void setPopupMenu(JPopupMenu popMenu) {
-		table.setComponentPopupMenu(popMenu);
-		
+		table.setComponentPopupMenu(popMenu);		
 	}
 	
-	
-	
-	
-	
-	public abstract void initList(); 
-	
+	public abstract void initList(); 	
 	
 	private void initialize() {
 		setLayout(new BorderLayout(0, 0));
@@ -63,7 +57,7 @@ public abstract class AbstractCustomTablePanel<T> extends JPanel {
 	}
 
 	public DefaultTableModel getModel() {
-		CustomTableModel model = new CustomTableModel(getData(), getColumnNames());
+		CustomTableModel model = new CustomTableModel(/*getData(), getColumnNames()*/);
 		return model;
 	}
 	
@@ -81,8 +75,6 @@ public abstract class AbstractCustomTablePanel<T> extends JPanel {
 		
 		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
 		table.setRowSorter(sorter);
-		
-		
 		
 		setAlignAndWidth();
 	};
@@ -119,6 +111,9 @@ public abstract class AbstractCustomTablePanel<T> extends JPanel {
 	
 	
 	private class CustomTableModel extends DefaultTableModel {
+		public CustomTableModel() {
+		}
+		
 		public CustomTableModel(Object[][] data, Object[] columnNames) {
 			super(data, columnNames);
 		}

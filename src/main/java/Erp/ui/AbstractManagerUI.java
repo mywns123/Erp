@@ -41,33 +41,6 @@ public abstract class AbstractManagerUI<T> extends JFrame implements ActionListe
 		tableLoadData(); //component load data
 	}
 	
-	protected abstract void setService();
-	
-	protected abstract void tableLoadData() ;
-	
-	protected abstract AbstractCotentPanel<T> creatContentPanel();
-	
-	protected abstract AbstractCustomTablePanel<T> creatTablePanel();
-	
-	protected abstract void actionPerformdMenuGubun();
-
-	protected abstract void actionPerformdMenuUpdate();
-
-	protected abstract void actionPerformdMenuDelete();
-		
-	protected abstract void actionPerformedBtnUpdate(ActionEvent e); 
-	
-	protected abstract void actionPerformedBtnAdd(ActionEvent e);
-	
-	protected void actionPerformedBtnClear(ActionEvent e) {
-		pContent.clearTf();
-		
-		if (btnAdd.getText().contentEquals("수정")) {
-			btnAdd.setText("추가");
-		}
-	}
-
-	
 	private void initialize() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -90,8 +63,7 @@ public abstract class AbstractManagerUI<T> extends JFrame implements ActionListe
 		btnClear.addActionListener(this);
 		pBtn.add(btnClear);
 		
-		pList = creatTablePanel();
-		
+		pList = creatTablePanel();		
 		contentPane.add(pList);
 		
 		JPopupMenu popupMenu = createPopupMenu();
@@ -147,6 +119,32 @@ public abstract class AbstractManagerUI<T> extends JFrame implements ActionListe
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}catch (Exception e1) {
 			e1.printStackTrace();
+		}
+	}
+	
+protected abstract void setService();
+	
+	protected abstract void tableLoadData() ;
+	
+	protected abstract AbstractCotentPanel<T> creatContentPanel();
+	
+	protected abstract AbstractCustomTablePanel<T> creatTablePanel();
+	
+	protected abstract void actionPerformdMenuGubun();
+
+	protected abstract void actionPerformdMenuUpdate();
+
+	protected abstract void actionPerformdMenuDelete();
+		
+	protected abstract void actionPerformedBtnUpdate(ActionEvent e); 
+	
+	protected abstract void actionPerformedBtnAdd(ActionEvent e);
+	
+	protected void actionPerformedBtnClear(ActionEvent e) {
+		pContent.clearTf();
+		
+		if (btnAdd.getText().contentEquals("수정")) {
+			btnAdd.setText("추가");
 		}
 	}
 }
