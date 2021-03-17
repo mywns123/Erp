@@ -84,10 +84,6 @@ public abstract class AbstractCustomTablePanel<T> extends JPanel {
 		for (int i = 0; i < idx.length; i++) {
 			tcm.getColumn(idx[i]).setCellRenderer(dtcr);
 		}
-	}		
-
-	public Object[][] getData() {
-		return new Object[][] { { null, null, null }, };
 	}
 
 	public abstract Object[] toArray(T t);
@@ -99,6 +95,10 @@ public abstract class AbstractCustomTablePanel<T> extends JPanel {
 	
 	public void setPopupMenu(JPopupMenu popMenu) {
 		table.setComponentPopupMenu(popMenu);
+	}	
+	
+	public Object[][] getData() {
+		return new Object[][] { { null, null, null }, };
 	}	
 	
 	private class CustomTableModel extends DefaultTableModel {
