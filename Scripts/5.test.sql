@@ -35,9 +35,10 @@ INSERT INTO emp_detail(empno, pic, gender, hiredate, pass)VALUES(?, ?, ?, ?, ?);
 
 select * from emp_detail;
 
-select empNo,pic,gender,hiredate,pass from emp_detail where empno = 1003 ;
+select empNo,pic,gender,hiredate,pass from emp_detail where empno = 1003;
 
-delete from emp_detail where empno = 1003;
+-- delete from emp_detail where empno = 1003;
+
 
 
 

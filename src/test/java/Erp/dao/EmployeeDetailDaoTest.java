@@ -71,7 +71,7 @@ public class EmployeeDetailDaoTest {
 	public void test03UpdateEmployeeDetail() {
 		System.out.printf("%s()%n", "test03UpdateEmployeeDetail");
 		
-		EmployeeDetail empDetail = new EmployeeDetail(1003,false, new Date(),"1234",getImage("flower.jpg"));
+		EmployeeDetail empDetail = new EmployeeDetail(1003,false, new Date(),"1234",getImage("1.jpg"));
 		int res = dao.updateEmployeeDetail(empDetail);	
 		
 		Assert.assertEquals(1, res);
@@ -79,7 +79,7 @@ public class EmployeeDetailDaoTest {
 		System.out.println(dao.selectEmployeeDetailByNo(new Employee(1003)));
 	}
 
-	@Test
+//	@Test
 	public void test04DeleteEmployeeDetail() {
 		System.out.printf("%s()%n", "test04DeleteEmployeeDetail");
 		Employee employee = new Employee(1003);

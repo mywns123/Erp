@@ -5,13 +5,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
@@ -29,6 +35,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.toedter.calendar.JDateChooser;
 
+import Erp.dto.Employee;
 import Erp.dto.EmployeeDetail;
 import Erp.ui.exception.InvalidCheckException;
 
@@ -52,7 +59,7 @@ public class EmployeeDetailPanel extends AbstractCotentPanel<EmployeeDetail> imp
 	private void loadPic(String imgFilePath) {
 		Image chanagImage = null;
 		if(imgFilePath == null) {
-		ImageIcon icon = new ImageIcon(imgPath + "1.jpg");
+		ImageIcon icon = new ImageIcon(imgPath + "no.jpg");
 		chanagImage = icon.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH);
 		}else {
 			ImageIcon icon = new ImageIcon(imgFilePath);
@@ -89,31 +96,40 @@ public class EmployeeDetailPanel extends AbstractCotentPanel<EmployeeDetail> imp
 		pItem.add(pContent);
 		pContent.setLayout(new GridLayout(0, 2, 10, 0));
 		
-		JLabel lblHireDate = new JLabel("입사일");
+		JLabel lblEmpNo = new JLabel("사원번호");
+		lblEmpNo.setHorizontalAlignment(SwingConstants.RIGHT);
+		pContent.add(lblEmpNo);
+		
+		tfEmpNo = new JTextField();
+		tfEmpNo.setEditable(false);
+		pContent.add(tfEmpNo);
+		tfEmpNo.setColumns(10);
+		
+		lblHireDate = new JLabel("입사일");
 		lblHireDate.setHorizontalAlignment(SwingConstants.RIGHT);
 		pContent.add(lblHireDate);
 		
-		JDateChooser dateHire = new JDateChooser(new Date());
+		dateHire = new JDateChooser(new Date());
 		pContent.add(dateHire);
 		
-		JLabel lblGender = new JLabel("성별");
+		lblGender = new JLabel("성별");
 		lblGender.setHorizontalAlignment(SwingConstants.RIGHT);
 		pContent.add(lblGender);
 		
-		JPanel pGender = new JPanel();
+		pGender = new JPanel();
 		pContent.add(pGender);
 		pGender.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JRadioButton rdbtnFemale = new JRadioButton("여");
+		rdbtnFemale = new JRadioButton("여");
 		buttonGroup.add(rdbtnFemale);
 		rdbtnFemale.setSelected(true);
 		pGender.add(rdbtnFemale);
 		
-		JRadioButton rdbtnMale = new JRadioButton("남");
+		rdbtnMale = new JRadioButton("남");
 		buttonGroup.add(rdbtnMale);
 		pGender.add(rdbtnMale);
 		
-		JLabel lblPass1 = new JLabel("비밀번호");
+		lblPass1 = new JLabel("비밀번호");
 		lblPass1.setHorizontalAlignment(SwingConstants.RIGHT);
 		pContent.add(lblPass1);
 		
@@ -121,7 +137,7 @@ public class EmployeeDetailPanel extends AbstractCotentPanel<EmployeeDetail> imp
 		pfPass1.getDocument().addDocumentListener(listener);
 		pContent.add(pfPass1);
 		
-		JLabel lblPass2 = new JLabel("비밀번호 확인");
+		lblPass2 = new JLabel("비밀번호 확인");
 		lblPass2.setHorizontalAlignment(SwingConstants.RIGHT);
 		pContent.add(lblPass2);
 		
@@ -139,13 +155,62 @@ public class EmployeeDetailPanel extends AbstractCotentPanel<EmployeeDetail> imp
 		pContent.add(lblPassConfirm);
 	}
 
+	public void setTfEmpno(Employee empNo) {
+		tfEmpNo.setText(String.valueOf(empNo.getEmpNo()));
+	}
+	
+	
+	
+	
 	@Override
 	public void setItem(EmployeeDetail item) {
+		tfEmpNo.setText(String.valueOf(item.getEmpNo()));
+		byte[] iconByte = item.getPic();
+		ImageIcon icon = new ImageIcon(iconByte);		
+		Image chanagImage = icon.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH);
+		ImageIcon  chanagIcon =  new ImageIcon(chanagImage);
+		lblPic.setIcon(chanagIcon);
+		dateHire.setDate(item.getHiredate());
+		if(item.isGender()) {
+			rdbtnFemale.setSelected(true);
+		}else {
+			rdbtnMale.setSelected(true);
+		}
+		
 		
 	}
 
 	@Override
 	public EmployeeDetail getItem() {
+		validCheck();
+		int empNo = Integer.parseInt(tfEmpNo.getText().trim());
+		boolean gender = rdbtnFemale.isSelected()?true:false;
+		Date hiredate = dateHire.getDate();
+		if(lblPassConfirm.getText() == "불일치") {
+			throw new InvalidCheckException("패스워드 불일치");
+		}
+		String pass = String.valueOf(pfPass1.getPassword());
+		byte[] pic = getImage();
+		return new EmployeeDetail(empNo, gender, hiredate, pass, pic);
+	}
+
+	private byte[] getImage() {
+		
+		try(ByteArrayOutputStream baos = new ByteArrayOutputStream()){
+			ImageIcon icon = (ImageIcon)lblPic.getIcon();
+		BufferedImage bi =new BufferedImage(icon.getIconWidth(), icon.getIconHeight(),BufferedImage.SCALE_SMOOTH);
+		
+		//icon -> image
+		Graphics2D g2 = bi.createGraphics();
+		g2.drawImage(icon.getImage(), 0, 0, null);
+		g2.dispose();
+		
+		ImageIO.write(bi, "png", baos);
+		return baos.toByteArray();
+		
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -158,7 +223,12 @@ public class EmployeeDetailPanel extends AbstractCotentPanel<EmployeeDetail> imp
 
 	@Override
 	public void clearTf() {
-		
+		loadPic(null);
+		dateHire.setDate(new Date());
+		rdbtnFemale.setSelected(true);
+		pfPass1.setText("");
+		pfPass2.setText("");
+		lblPassConfirm.setText("");
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -204,4 +274,13 @@ public class EmployeeDetailPanel extends AbstractCotentPanel<EmployeeDetail> imp
 			}
 		}
 	};
+	private JTextField tfEmpNo;
+	private JLabel lblHireDate;
+	private JLabel lblGender;
+	private JPanel pGender;
+	private JDateChooser dateHire;
+	private JLabel lblPass2;
+	private JLabel lblPass1;
+	private JRadioButton rdbtnMale;
+	private JRadioButton rdbtnFemale;
 }
