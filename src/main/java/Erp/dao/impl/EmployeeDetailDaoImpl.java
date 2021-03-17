@@ -66,9 +66,8 @@ public class EmployeeDetailDaoImpl implements EmployeeDetailDao {
 			
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new SqlConstraintException(e.getMessage(), e);
 		}
-		return 0;
 	}
 
 	@Override

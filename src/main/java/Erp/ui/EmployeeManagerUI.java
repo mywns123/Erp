@@ -54,17 +54,19 @@ public class EmployeeManagerUI extends AbstractManagerUI<Employee> {
 	@Override
 	protected void actionPerformdMenuGubun() {
 		Employee emp =pList.getItem();
-//		System.out.println(emp);
 		EmployeeDetail empDetail = detailService.selectEmployeeDetailByEmpNo(emp);
-	
-		// 나중에 처리
-		if(empDetail == null) {
-			JOptionPane.showMessageDialog(null, "세부정보 없음");
-			return;
-		}
-				
-//		System.out.println(empDetail);
 		
+		// 나중에 처리
+		EmployeeDetailUI frame;
+		if(empDetail == null) {
+			 frame = new EmployeeDetailUI(true,detailService);			
+		}else {
+			frame = new EmployeeDetailUI(false,detailService);			
+			frame.setDetailItem(empDetail);			
+		}
+		frame.setEmpNO(emp);
+		frame.setVisible(true);			
+	/*	
 		JFrame subFrame = new JFrame("사원 세부 정보");
 		subFrame.setBounds(this.getWidth(), this.getHeight(), 450 ,500);
 		
@@ -74,8 +76,7 @@ public class EmployeeManagerUI extends AbstractManagerUI<Employee> {
 		subFrame.add(subDetailPanel, BorderLayout.CENTER);
 		
 		subFrame.setVisible(true);
-		
-		
+	 */		
 //		throw new UnsupportedOperationException("제공되지 않음");		
 	}
 

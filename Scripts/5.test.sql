@@ -40,7 +40,7 @@ select empNo,pic,gender,hiredate,pass from emp_detail where empno = 1003;
 -- delete from emp_detail where empno = 1003;
 
 
-
+select empNo,pic,gender,hiredate,pass from emp_detail where empno = 2106;
 
 
 
