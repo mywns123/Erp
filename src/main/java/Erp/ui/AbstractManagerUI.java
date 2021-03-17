@@ -26,6 +26,11 @@ public abstract class AbstractManagerUI<T> extends JFrame implements ActionListe
 	
 	protected AbstractCotentPanel<T> pContent;	
 	protected AbstractCustomTablePanel<T> pList;
+	protected JMenuItem empListByTitleItem;
+	
+	protected static final String TITLE_MENU = "동일 직책 사원 보기";
+	protected static final String DEPT_MENU = "동일 부서 사원 보기";
+	protected static final String EMP_MENU = "사원 세부정보 보기";
 	
 	
 	public AbstractManagerUI() {
@@ -95,7 +100,7 @@ public abstract class AbstractManagerUI<T> extends JFrame implements ActionListe
 	}
 
 	private JPopupMenu createPopupMenu() {
-JPopupMenu popMenu = new JPopupMenu();
+		JPopupMenu popMenu = new JPopupMenu();
 		
 		JMenuItem updateItem = new JMenuItem("수정");
 		updateItem.addActionListener(this);
@@ -105,7 +110,7 @@ JPopupMenu popMenu = new JPopupMenu();
 		deleteItem.addActionListener(this);
 		popMenu.add(deleteItem);
 		
-		JMenuItem empListByTitleItem = new JMenuItem("동일직책 사원 보기");
+		empListByTitleItem = new JMenuItem("동일 직책 사원 보기");
 		empListByTitleItem.addActionListener(this);
 		popMenu.add(empListByTitleItem);
 		
@@ -122,9 +127,11 @@ JPopupMenu popMenu = new JPopupMenu();
 				if(e.getActionCommand().equals("수정")) {
 					actionPerformdMenuUpdate();
 				}
-				if (e.getActionCommand().contentEquals("동일 직책 사원 보기")) {
+				if (e.getActionCommand().contentEquals(AbstractManagerUI.TITLE_MENU) ||
+						e.getActionCommand().contentEquals(AbstractManagerUI.DEPT_MENU) ||
+						e.getActionCommand().contentEquals(AbstractManagerUI.EMP_MENU)) {
 					actionPerformdMenuGubun();
-				}
+				}				
 			}else {
 				if (e.getSource() == btnClear) {
 					actionPerformedBtnClear(e);
