@@ -148,7 +148,7 @@ public class EmployeeDetailPanel extends AbstractCotentPanel<EmployeeDetail> imp
 		JPanel pSpace = new JPanel();
 		pContent.add(pSpace);
 		
-		lblPassConfirm = new JLabel("New label");
+		lblPassConfirm = new JLabel("");
 		lblPassConfirm.setFont(new Font("굴림", Font.BOLD, 20));
 		lblPassConfirm.setForeground(Color.RED);
 		lblPassConfirm.setHorizontalAlignment(SwingConstants.CENTER);

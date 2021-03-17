@@ -69,7 +69,6 @@ public abstract class AbstractManagerUI<T> extends JFrame implements ActionListe
 
 	
 	private void initialize() {
-		setTitle("직책 관리");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

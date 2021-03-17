@@ -46,13 +46,13 @@ public class Main extends JFrame implements ActionListener {
 
 	public void creatMethod() {
 		titleFrame = new TitleManagerUI();
-		setTitle("직책관리");
+		titleFrame.setTitle("직책관리");
 		
 		deptFrame = new DepartmentManagerUI();
-		setTitle("부서관리");
+		deptFrame.setTitle("부서관리");
 		
 		empFrame = new EmployeeManagerUI();
-		setTitle("사원관리");
+		empFrame.setTitle("사원관리");
 	}
 
 	private void initialize() {
