@@ -90,8 +90,7 @@ public abstract class AbstractCustomTablePanel<T> extends JPanel {
 
 	public abstract String[] getColumnNames();
 
-	public abstract T getItem();	
-	
+	public abstract T getItem();		
 	
 	public void setPopupMenu(JPopupMenu popMenu) {
 		table.setComponentPopupMenu(popMenu);
@@ -114,4 +113,5 @@ public abstract class AbstractCustomTablePanel<T> extends JPanel {
 			return false;
 		}
 	}
+	
 }

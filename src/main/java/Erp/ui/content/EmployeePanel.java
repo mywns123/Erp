@@ -38,30 +38,6 @@ public class EmployeePanel extends AbstractCotentPanel<Employee> implements Item
 		initialize();
 	}
 
-	public EmployeeService getService() {
-		return service;
-	}
-
-	public void setService(EmployeeService service) {
-		this.service = service;
-
-		List<Department> deptList = service.showDeptList();
-		DefaultComboBoxModel<Department> deptModel = new DefaultComboBoxModel<>(new Vector<>(deptList));
-		cmbDept.setModel(deptModel);
-
-		List<Title> tList = service.showTList();
-		DefaultComboBoxModel<Title> tModel = new DefaultComboBoxModel<>(new Vector<>(tList));
-		cmbTitle.setModel(tModel);
-
-		List<Employee> empList = service.showEmpList();
-		DefaultComboBoxModel<Employee> empModel = new DefaultComboBoxModel<>(new Vector<>(empList));
-		cmbManager.setModel(empModel);
-
-		cmbDept.setSelectedIndex(-1);
-		cmbTitle.setSelectedIndex(-1);
-		cmbManager.setSelectedIndex(-1);
-	}
-
 	private void initialize() {
 		setBorder(new TitledBorder(null, "사원 정보", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new BorderLayout(0, 0));
@@ -117,25 +93,28 @@ public class EmployeePanel extends AbstractCotentPanel<Employee> implements Item
 		pItem.add(spinSalary);
 	}
 
-	@Override
-	public void validCheck() {
-		if (tfNo.getText().contentEquals("") ||
-				tfName.getText().contentEquals("") ||
-				cmbTitle.getSelectedIndex() == -1 ||
-				cmbManager.getSelectedIndex() == -1 ||
-				cmbDept.getSelectedIndex() == -1) {
-			throw new InvalidCheckException();
-		}
+	public EmployeeService getService() {
+		return service;
 	}
 
-	@Override
-	public void clearTf() {
-		tfNo.setText("");
-		tfName.setText("");
+	public void setService(EmployeeService service) {
+		this.service = service;
+
+		List<Department> deptList = service.showDeptList();
+		DefaultComboBoxModel<Department> deptModel = new DefaultComboBoxModel<>(new Vector<>(deptList));
+		cmbDept.setModel(deptModel);
+
+		List<Title> tList = service.showTList();
+		DefaultComboBoxModel<Title> tModel = new DefaultComboBoxModel<>(new Vector<>(tList));
+		cmbTitle.setModel(tModel);
+
+		List<Employee> empList = service.showEmpList();
+		DefaultComboBoxModel<Employee> empModel = new DefaultComboBoxModel<>(new Vector<>(empList));
+		cmbManager.setModel(empModel);
+
+		cmbDept.setSelectedIndex(-1);
 		cmbTitle.setSelectedIndex(-1);
 		cmbManager.setSelectedIndex(-1);
-		spinSalary.setValue(2000000);
-		cmbDept.setSelectedIndex(-1);
 	}
 
 	public void itemStateChanged(ItemEvent e) {
@@ -148,11 +127,10 @@ public class EmployeePanel extends AbstractCotentPanel<Employee> implements Item
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 			Department dept = (Department) cmbDept.getSelectedItem();
 			List<Employee> empList = service.showEmployeeByDept(dept);
-			//직속 상사가 없는 경우 추가
+			// 직속 상사가 없는 경우 추가
 			if (empList == null) {
 				empList = new ArrayList<Employee>();
 			}
-
 			DefaultComboBoxModel<Employee> model = new DefaultComboBoxModel<>(new Vector<>(empList));
 			cmbManager.setModel(model);
 			cmbManager.setSelectedIndex(-1);
@@ -184,4 +162,23 @@ public class EmployeePanel extends AbstractCotentPanel<Employee> implements Item
 
 		return new Employee(empNo, empName, title, manager, salary, dept);
 	}
+
+	@Override
+	public void validCheck() {
+		if (tfNo.getText().contentEquals("") || tfName.getText().contentEquals("") || cmbTitle.getSelectedIndex() == -1
+				|| cmbManager.getSelectedIndex() == -1 || cmbDept.getSelectedIndex() == -1) {
+			throw new InvalidCheckException();
+		}
+	}
+
+	@Override
+	public void clearTf() {
+		tfNo.setText("");
+		tfName.setText("");
+		cmbTitle.setSelectedIndex(-1);
+		cmbManager.setSelectedIndex(-1);
+		spinSalary.setValue(2000000);
+		cmbDept.setSelectedIndex(-1);
+	}
+
 }

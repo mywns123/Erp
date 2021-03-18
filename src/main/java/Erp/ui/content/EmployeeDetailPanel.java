@@ -49,6 +49,15 @@ public class EmployeeDetailPanel extends AbstractCotentPanel<EmployeeDetail> imp
 	private JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
 	private JButton btnAddPic;
 	private JLabel lblPassConfirm;
+	private JTextField tfEmpNo;
+	private JLabel lblHireDate;
+	private JLabel lblGender;
+	private JPanel pGender;
+	private JDateChooser dateHire;
+	private JLabel lblPass2;
+	private JLabel lblPass1;
+	private JRadioButton rdbtnMale;
+	private JRadioButton rdbtnFemale;
 
 	public EmployeeDetailPanel() {
 		initialize();
@@ -202,7 +211,6 @@ public class EmployeeDetailPanel extends AbstractCotentPanel<EmployeeDetail> imp
 
 			ImageIO.write(bi, "png", baos);
 			return baos.toByteArray();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -272,13 +280,5 @@ public class EmployeeDetailPanel extends AbstractCotentPanel<EmployeeDetail> imp
 			}
 		}
 	};
-	private JTextField tfEmpNo;
-	private JLabel lblHireDate;
-	private JLabel lblGender;
-	private JPanel pGender;
-	private JDateChooser dateHire;
-	private JLabel lblPass2;
-	private JLabel lblPass1;
-	private JRadioButton rdbtnMale;
-	private JRadioButton rdbtnFemale;
+	
 }

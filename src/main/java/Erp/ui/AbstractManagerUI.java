@@ -86,7 +86,6 @@ public abstract class AbstractManagerUI<T> extends JFrame implements ActionListe
 	}
 
 	public void actionPerformed(ActionEvent e) {
-
 		try {
 			if (e.getSource() instanceof JMenuItem) {
 				if (e.getActionCommand().equals("삭제")) {
@@ -144,4 +143,5 @@ public abstract class AbstractManagerUI<T> extends JFrame implements ActionListe
 			btnAdd.setText("추가");
 		}
 	}
+
 }

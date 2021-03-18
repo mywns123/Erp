@@ -1,7 +1,8 @@
 package Erp.ui;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,25 +14,22 @@ import Erp.dto.Employee;
 import Erp.dto.EmployeeDetail;
 import Erp.service.EmployeeDetailService;
 import Erp.ui.content.EmployeeDetailPanel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class EmployeeDetailUI extends JFrame implements ActionListener {
-	
+
 	private JPanel contentPane;
 	private JPanel pBtns;
 	private EmployeeDetailPanel pItem;
 	private JButton btnAdd;
 	private EmployeeDetailService service;
-	private JButton btnCancel;	
-	
-	
-	public EmployeeDetailUI(boolean isBtns,EmployeeDetailService service) {
+	private JButton btnCancel;
+
+	public EmployeeDetailUI(boolean isBtns, EmployeeDetailService service) {
 		this.service = service;
 		initialize(isBtns);
 	}
-	
+
 	private void initialize(boolean isBtns) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 550, 650);
@@ -39,12 +37,12 @@ public class EmployeeDetailUI extends JFrame implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		pItem = new EmployeeDetailPanel();
 		contentPane.add(pItem, BorderLayout.CENTER);
-		
+
 		pBtns = new JPanel();
-			
+
 		contentPane.add(pBtns, BorderLayout.SOUTH);
 
 		btnAdd = new JButton();
@@ -53,34 +51,28 @@ public class EmployeeDetailUI extends JFrame implements ActionListener {
 
 		btnCancel = new JButton();
 		btnCancel.addActionListener(this);
-		pBtns.add(btnCancel);	
-		
-		if(isBtns) {			
+		pBtns.add(btnCancel);
+
+		if (isBtns) {
 			btnAdd.setText("추가");
 			btnCancel.setText("취소");
-		}
-		else {
+		} else {
 			btnAdd.setText("수정");
 			btnCancel.setText("삭제");
 		}
-		
 	}
-	
+
 	public void setEmpNO(Employee empNo) {
 		pItem.setTfEmpno(empNo);
 	}
-	
-	
-	
+
 	public void setDetailItem(EmployeeDetail empDetail) {
 //		btnAdd.setText("수정");
 		pItem.setItem(empDetail);
 	}
-	
-	
-	
+
 	////////////////////////////////////////////////////////////////////////
-	
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().contentEquals("삭제")) {
 			actionPerformedBtnDel(e);
@@ -95,12 +87,12 @@ public class EmployeeDetailUI extends JFrame implements ActionListener {
 			actionPerformedBtnUpdate(e);
 		}
 	}
-	
+
 	private void actionPerformedBtnUpdate(ActionEvent e) {
 		EmployeeDetail updateEmpDetail = pItem.getItem();
 		service.modifyEmployeeDetail(updateEmpDetail);
 		pItem.clearTf();
-		JOptionPane.showMessageDialog(null, "수정완료");	
+		JOptionPane.showMessageDialog(null, "수정완료");
 		dispose();
 	}
 
@@ -113,16 +105,18 @@ public class EmployeeDetailUI extends JFrame implements ActionListener {
 		JOptionPane.showMessageDialog(null, "추가완료");
 		dispose();
 	}
+
 	protected void actionPerformedBtnCancel(ActionEvent e) {
 		pItem.clearTf();
-		if(btnAdd.getText().contentEquals("수정")) {
+		if (btnAdd.getText().contentEquals("수정")) {
 			btnAdd.setText("추가");
 		}
 	}
+
 	protected void actionPerformedBtnDel(ActionEvent e) {
 		EmployeeDetail empDetail = pItem.getItem();
 		service.removeEmployeeDetail(new Employee(empDetail.getEmpNo()));
-		pItem.clearTf();		
+		pItem.clearTf();
 		JOptionPane.showMessageDialog(null, "삭제완료");
 	}
 }

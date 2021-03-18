@@ -3,8 +3,6 @@ package Erp.ui.list;
 import javax.swing.SwingConstants;
 
 import Erp.dto.Department;
-import Erp.dto.Employee;
-import Erp.dto.Title;
 import Erp.service.DepartmentService;
 import Erp.ui.exception.NotSelectedException;
 

@@ -41,13 +41,7 @@ public class TitlePanel extends AbstractCotentPanel<Title> {
 		tftName = new JTextField();
 		tftName.setColumns(10);
 		add(tftName);
-	}
-
-	@Override
-	public void clearTf() {
-		tftNO.setText("");
-		tftName.setText("");
-	}
+	}	
 
 	@Override
 	public void setItem(Title item) {
@@ -70,4 +64,10 @@ public class TitlePanel extends AbstractCotentPanel<Title> {
 		}
 	}
 
+	@Override
+	public void clearTf() {
+		tftNO.setText("");
+		tftName.setText("");
+	}
+	
 }

@@ -17,9 +17,8 @@ import Erp.ui.list.EmployeeTablePanel;
 public class EmployeeManagerUI extends AbstractManagerUI<Employee> {
 
 	private EmployeeService service;
-	private EmployeeDetailService detailService ;
-	
-	
+	private EmployeeDetailService detailService;
+
 	public EmployeeManagerUI() {
 		empListByTitleItem.setText(AbstractManagerUI.EMP_MENU);
 	}
@@ -32,8 +31,8 @@ public class EmployeeManagerUI extends AbstractManagerUI<Employee> {
 
 	@Override
 	protected void tableLoadData() {
-		((EmployeeTablePanel)pList).setService(service);
-		pList.loadData();		
+		((EmployeeTablePanel) pList).setService(service);
+		pList.loadData();
 	}
 
 	@Override
@@ -50,30 +49,30 @@ public class EmployeeManagerUI extends AbstractManagerUI<Employee> {
 
 	@Override
 	protected void actionPerformdMenuGubun() {
-		Employee emp =pList.getItem();
+		Employee emp = pList.getItem();
 		EmployeeDetail empDetail = detailService.selectEmployeeDetailByEmpNo(emp);
-		
+
 		// 나중에 처리
 		EmployeeDetailUI frame;
-		if(empDetail == null) {
-			 frame = new EmployeeDetailUI(true,detailService);			
-		}else {
-			frame = new EmployeeDetailUI(false,detailService);			
-			frame.setDetailItem(empDetail);			
+		if (empDetail == null) {
+			frame = new EmployeeDetailUI(true, detailService);
+		} else {
+			frame = new EmployeeDetailUI(false, detailService);
+			frame.setDetailItem(empDetail);
 		}
 		frame.setEmpNO(emp);
-		frame.setVisible(true);			
-	/*	
-		JFrame subFrame = new JFrame("사원 세부 정보");
-		subFrame.setBounds(this.getWidth(), this.getHeight(), 450 ,500);
-		
-		EmployeeDetailPanel subDetailPanel = new EmployeeDetailPanel();
-		subDetailPanel.setItem(empDetail);
-		
-		subFrame.add(subDetailPanel, BorderLayout.CENTER);
-		
-		subFrame.setVisible(true);
-	 */		
+		frame.setVisible(true);
+		/*
+		 * JFrame subFrame = new JFrame("사원 세부 정보"); subFrame.setBounds(this.getWidth(),
+		 * this.getHeight(), 450 ,500);
+		 * 
+		 * EmployeeDetailPanel subDetailPanel = new EmployeeDetailPanel();
+		 * subDetailPanel.setItem(empDetail);
+		 * 
+		 * subFrame.add(subDetailPanel, BorderLayout.CENTER);
+		 * 
+		 * subFrame.setVisible(true);
+		 */
 //		throw new UnsupportedOperationException("제공되지 않음");		
 	}
 
@@ -81,7 +80,7 @@ public class EmployeeManagerUI extends AbstractManagerUI<Employee> {
 	protected void actionPerformdMenuUpdate() {
 		Employee updateEmp = pList.getItem();
 		pContent.setItem(updateEmp);
-		btnAdd.setText("수정");		
+		btnAdd.setText("수정");
 	}
 
 	@Override
@@ -100,7 +99,6 @@ public class EmployeeManagerUI extends AbstractManagerUI<Employee> {
 		pContent.clearTf();
 		btnAdd.setText("추가");
 		JOptionPane.showMessageDialog(null, updateEmp.getEmpName() + "정보가 수정되었습니다.");
-		
 	}
 
 	@Override
@@ -110,7 +108,6 @@ public class EmployeeManagerUI extends AbstractManagerUI<Employee> {
 		pList.loadData();
 		pContent.clearTf();
 		JOptionPane.showMessageDialog(null, employee.getEmpName() + " 추가했습니다.");
-		
 	}
 
 }

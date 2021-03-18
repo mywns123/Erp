@@ -50,23 +50,11 @@ public class DepartmentPanel extends AbstractCotentPanel<Department> {
 	}
 
 	@Override
-	public void clearTf() {
-		tfDeptNo.setText("");
-		tfDeptName.setText("");
-		tfFloor.setText("");
-
-		if (!tfDeptNo.isEditable()) {
-			tfDeptNo.setEditable(true);
-		}
-	}
-
-	@Override
 	public void setItem(Department item) {
 		tfDeptNo.setText(String.valueOf(item.getDeptno()));
 //		tfDeptNo.setText(department.getDeptNo() + "");
 		tfDeptName.setText(item.getDeptName());
 		tfFloor.setText(item.getFloor() + "");
-
 		tfDeptNo.setEditable(false);
 	}
 
@@ -81,10 +69,19 @@ public class DepartmentPanel extends AbstractCotentPanel<Department> {
 
 	@Override
 	public void validCheck() {
-		if (tfDeptNo.getText().contentEquals("") ||
-				tfDeptName.getText().equals("") ||
-				tfFloor.getText().equals("")) {
+		if (tfDeptNo.getText().contentEquals("") || tfDeptName.getText().equals("") || tfFloor.getText().equals("")) {
 			throw new InvalidCheckException();
+		}
+	}
+
+	@Override
+	public void clearTf() {
+		tfDeptNo.setText("");
+		tfDeptName.setText("");
+		tfFloor.setText("");
+
+		if (!tfDeptNo.isEditable()) {
+			tfDeptNo.setEditable(true);
 		}
 	}
 

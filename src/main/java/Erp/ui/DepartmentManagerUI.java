@@ -18,20 +18,20 @@ import Erp.ui.list.DepartmentTablePanel;
 public class DepartmentManagerUI extends AbstractManagerUI<Department> {
 
 	private DepartmentService service;
-	
+
 	public DepartmentManagerUI() {
 		empListByTitleItem.setText(AbstractManagerUI.DEPT_MENU);
 	}
 
 	@Override
 	protected void setService() {
-		service = new DepartmentService();		
+		service = new DepartmentService();
 	}
 
 	@Override
 	protected void tableLoadData() {
-		((DepartmentTablePanel)pList).setService(service);
-		pList.loadData();		
+		((DepartmentTablePanel) pList).setService(service);
+		pList.loadData();
 	}
 
 	@Override
@@ -53,19 +53,18 @@ public class DepartmentManagerUI extends AbstractManagerUI<Department> {
 			JOptionPane.showMessageDialog(null, "해당 사원이 없음", "동일 부서 사원", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		List<String> strList = list
-				.parallelStream()
-				.map( s->{ return String.format("%s(%d)", s.getEmpName(), s.getEmpNo()); })
-				.collect(Collectors.toList());
+		List<String> strList = list.parallelStream().map(s -> {
+			return String.format("%s(%d)", s.getEmpName(), s.getEmpNo());
+		}).collect(Collectors.toList());
 
 		JOptionPane.showMessageDialog(null, strList, "동일 부서 사원", JOptionPane.INFORMATION_MESSAGE);
 	}
-	
+
 	@Override
 	protected void actionPerformdMenuUpdate() {
 		Department updateDept = pList.getItem();
 		pContent.setItem(updateDept);
-		btnAdd.setText("수정");		
+		btnAdd.setText("수정");
 	}
 
 	@Override
@@ -94,4 +93,5 @@ public class DepartmentManagerUI extends AbstractManagerUI<Department> {
 		pContent.clearTf();
 		JOptionPane.showMessageDialog(null, department + " 추가했습니다.");
 	}
+
 }
