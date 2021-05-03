@@ -15,12 +15,12 @@ import Erp.ui.list.AbstractCustomTablePanel;
 import Erp.ui.list.TitleTablePanel;
 
 @SuppressWarnings("serial")
-public class TitleManagerUI extends AbstractManagerUI<Title> {
+public class TitleManagerUI extends AbstractUI<Title> {
 
 	private TitleService service;
 
 	public TitleManagerUI() {
-		empListByTitleItem.setText(AbstractManagerUI.TITLE_MENU);
+		empListByTitleItem.setText(AbstractUI.TITLE_MENU);
 	}
 
 	@Override

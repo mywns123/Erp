@@ -14,13 +14,13 @@ import Erp.ui.list.AbstractCustomTablePanel;
 import Erp.ui.list.EmployeeTablePanel;
 
 @SuppressWarnings("serial")
-public class EmployeeManagerUI extends AbstractManagerUI<Employee> {
+public class EmployeeManagerUI extends AbstractUI<Employee> {
 
 	private EmployeeService service;
 	private EmployeeDetailService detailService;
 
 	public EmployeeManagerUI() {
-		empListByTitleItem.setText(AbstractManagerUI.EMP_MENU);
+		empListByTitleItem.setText(AbstractUI.EMP_MENU);
 	}
 
 	@Override

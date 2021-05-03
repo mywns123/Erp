@@ -8,6 +8,8 @@ import Erp.ui.exception.NotSelectedException;
 
 @SuppressWarnings("serial")
 public class DepartmentTablePanel extends AbstractCustomTablePanel<Department> {
+	public DepartmentTablePanel() {
+	}
 	private DepartmentService service = new DepartmentService();
 	
 	public void setService(DepartmentService service) {

@@ -18,7 +18,7 @@ import Erp.ui.exception.SqlConstraintException;
 import Erp.ui.list.AbstractCustomTablePanel;
 
 @SuppressWarnings("serial")
-public abstract class AbstractManagerUI<T> extends JFrame implements ActionListener {
+public abstract class AbstractUI<T> extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	protected JButton btnAdd;
@@ -32,7 +32,7 @@ public abstract class AbstractManagerUI<T> extends JFrame implements ActionListe
 	protected static final String DEPT_MENU = "동일 부서 사원 보기";
 	protected static final String EMP_MENU = "사원 세부정보 보기";
 
-	public AbstractManagerUI() {
+	public AbstractUI() {
 		setService(); // service연결
 		initialize();
 		tableLoadData(); // component load data
@@ -94,9 +94,9 @@ public abstract class AbstractManagerUI<T> extends JFrame implements ActionListe
 				if (e.getActionCommand().equals("수정")) {
 					actionPerformdMenuUpdate();
 				}
-				if (e.getActionCommand().contentEquals(AbstractManagerUI.TITLE_MENU)
-						|| e.getActionCommand().contentEquals(AbstractManagerUI.DEPT_MENU)
-						|| e.getActionCommand().contentEquals(AbstractManagerUI.EMP_MENU)) {
+				if (e.getActionCommand().contentEquals(AbstractUI.TITLE_MENU)
+						|| e.getActionCommand().contentEquals(AbstractUI.DEPT_MENU)
+						|| e.getActionCommand().contentEquals(AbstractUI.EMP_MENU)) {
 					actionPerformdMenuGubun();
 				}
 			} else {

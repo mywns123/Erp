@@ -15,12 +15,12 @@ import Erp.ui.list.AbstractCustomTablePanel;
 import Erp.ui.list.DepartmentTablePanel;
 
 @SuppressWarnings("serial")
-public class DepartmentManagerUI extends AbstractManagerUI<Department> {
+public class DepartmentManagerUI extends AbstractUI<Department> {
 
 	private DepartmentService service;
 
 	public DepartmentManagerUI() {
-		empListByTitleItem.setText(AbstractManagerUI.DEPT_MENU);
+		empListByTitleItem.setText(AbstractUI.DEPT_MENU);
 	}
 
 	@Override
